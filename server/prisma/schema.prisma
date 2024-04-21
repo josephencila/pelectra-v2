@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Appliances {
+  appliancesId     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String   @db.Uuid
+  appliancesName   String
+  consumptionPerHr Decimal  @db.Decimal(10, 3)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model MonthlyListOfAppliances {
+  appliancesListId    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String   @db.Uuid
+  appliancesId        String   @db.Uuid
+  appliancesName      String
+  consumptionPerHr    Decimal  @db.Decimal(10, 3)
+  usagePerDay         Int
+  daysInMonth         Int
+  consumptionPerMonth Decimal  @db.Decimal(10, 3)
+  selectedAt          DateTime
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model MonthlyListOfExpenses {
+  expensesListId    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String   @db.Uuid
+  actualConsumption Decimal  @db.Decimal(10, 3)
+  actualBillExpense Int
+  selectedAt        DateTime
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
