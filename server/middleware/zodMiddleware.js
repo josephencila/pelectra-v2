@@ -1,6 +1,8 @@
 const { z } = require('zod')
 const zodMiddleware = (schema) => {
   return (req, res, next) => {
+   
+   
     try {
       schema.parse(req.body)
       return next()
@@ -14,7 +16,7 @@ const zodMiddleware = (schema) => {
         console.log(errorMessages)
         return res
           .status(400)
-          .json({ error: "Invalid data", details: errorMessages })
+          .json({ errors: errorMessages })
       } else {
         return res
           .status(500)

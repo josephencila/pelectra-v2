@@ -1,30 +1,27 @@
 const { z } = require('zod')
 
-const creatAppliancesSchema = z.object({
-    userId: z
-        .string()
-        .uuid({ message: 'Invalid UUID' })
-        .min(1, { message: 'User ID is required.' }),
+const createAppliancesSchema = z.object({
     appliancesName: z
         .string()
+        .min(1, { message: 'Appliances Name is a required.' })
         .superRefine((value, ctx) => {
             const singleSpace = /^[a-zA-Z]+( [a-zA-Z]+)*$/
             if (!singleSpace.test(value)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: 'Only single spaces and alphabetical letters are allowed.'
+                    message: 'Only alphabetical letters & single space between are allowed.'
                 })
             } else {
                 return
             }
-        })
-        .min(1, { message: 'Appliances Name is required.' }),
+        }),
     consumptionPerHr: z
         .coerce
         .number()
+        .min(0.000001,{message: "Consumption per hour is a required field."})
         .gt(0, { message: 'Consumption per hour must be greater than 0.' })
 })
 
 module.exports = {
-    creatAppliancesSchema
+    createAppliancesSchema
 }

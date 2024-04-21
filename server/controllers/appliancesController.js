@@ -1,5 +1,3 @@
-const zodMiddleware = require('../middleware/zodMiddleware')
-const {creatAppliancesSchema} = require('../utils/schema/zodSchema')
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
@@ -7,13 +5,9 @@ const prisma = new PrismaClient()
 // route POST /api/v1/appliances/create/:userId
 // private
 const createAppliances = async (req, res) => {
-    const { userId } = req.params
     const { appliancesName, consumptionPerHr } = req.body
-
-    // if (!appliancesName || !consumptionPerHr || !userId) {
-    //     return res.status(400).json({ message: 'Incomplete data' })
-    // }
-    zodMiddleware(creatAppliancesSchema)
+    
+    const userId = "aN34jHNc4HWDjFyM6OL4GQsAluN2"
     try {
         await prisma.appliances.create({
             data: {
@@ -32,12 +26,7 @@ const createAppliances = async (req, res) => {
 // route POST /api/v1/appliances/read/:userId
 // private
 const readAppliances = async (req, res) => {
-    const { userId } = req.params
-
-    if (!userId) {
-        return res.status(400).json({ message: 'Incomplete data' })
-    }
-
+    const userId = "aN34jHNc4HWDjFyM6OL4GQsAluN2"
     try {
         const allAppliances = await prisma.appliances.findMany({
             where: {
