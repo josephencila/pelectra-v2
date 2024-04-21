@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const zodMiddleware = require('../middleware/zodMiddleware')
-const {createAppliancesSchema} = require('../utils/schema/zodSchema')
+const { appliancesSchema } = require('../utils/schema/zodSchema')
 
 const {
     createAppliances,
@@ -11,10 +11,10 @@ const {
 } = require('../controllers/appliancesController')
 
 
-router.post('/create',zodMiddleware(createAppliancesSchema), createAppliances)
+router.post('/create', zodMiddleware(appliancesSchema), createAppliances)
 router.post('/read', readAppliances)
-router.put('/update/:userId/:appliancesId', updateAppliancesById)
-router.delete('/delete/:userId/:appliancesId', deleteAppliancesById)
+router.put('/update/:appliancesId', zodMiddleware(appliancesSchema), updateAppliancesById)
+router.delete('/delete/:appliancesId', deleteAppliancesById)
 
 
 

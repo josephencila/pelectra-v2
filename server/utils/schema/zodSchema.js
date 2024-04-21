@@ -1,6 +1,6 @@
 const { z } = require('zod')
 
-const createAppliancesSchema = z.object({
+const appliancesSchema = z.object({
     appliancesName: z
         .string()
         .min(1, { message: 'Appliances Name is a required.' })
@@ -23,5 +23,5 @@ const createAppliancesSchema = z.object({
 })
 
 module.exports = {
-    createAppliancesSchema
+    appliancesSchema,
 }

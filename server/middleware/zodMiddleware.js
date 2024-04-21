@@ -1,10 +1,10 @@
 const { z } = require('zod')
 const zodMiddleware = (schema) => {
   return (req, res, next) => {
-   
-   
+    const {params,body} = req
+    let merge = {...params,...body}
     try {
-      schema.parse(req.body)
+      schema.parse(merge)
       return next()
     } catch (error) {
 
