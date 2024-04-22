@@ -37,7 +37,7 @@ const readAppliances = async (req, res) => {
                 consumptionPerHr: true
             }
         })
-        return res.status(200).json({ message: allAppliances })
+        return res.status(200).json({ data: allAppliances })
     } catch (error) {
         return res.status(400).json({ message: error.message ?? error })
     }
@@ -61,7 +61,7 @@ const updateAppliancesById = async (req, res) => {
                 }
             }
         )
-        return res.status(200).json({ message: allData })
+        return res.status(200).json({ data: allData })
     } catch (error) {
         return res.status(400).json({ message: error.message ?? error })
     }

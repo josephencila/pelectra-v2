@@ -9,7 +9,7 @@ datasource db {
 
 model Appliances {
   appliancesId     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId           String   
+  userId           String
   appliancesName   String
   consumptionPerHr Decimal  @db.Decimal(10, 3)
   createdAt        DateTime @default(now())
@@ -17,12 +17,12 @@ model Appliances {
 }
 
 model MonthlyListOfAppliances {
-  appliancesListId    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId              String   
+  monthlyAppliancesId String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String
   appliancesId        String   @db.Uuid
   appliancesName      String
   consumptionPerHr    Decimal  @db.Decimal(10, 3)
-  usagePerDay         Int
+  dailyUsage          Int
   daysInMonth         Int
   consumptionPerMonth Decimal  @db.Decimal(10, 3)
   selectedAt          DateTime
@@ -31,8 +31,8 @@ model MonthlyListOfAppliances {
 }
 
 model MonthlyListOfExpenses {
-  expensesListId    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId            String   
+  monthlyExpenseId  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String
   actualConsumption Decimal  @db.Decimal(10, 3)
   actualBillExpense Int
   selectedAt        DateTime

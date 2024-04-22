@@ -1,6 +1,9 @@
 const { z } = require('zod')
 const zodMiddleware = (schema) => {
   return (req, res, next) => {
+   
+    console.log("zodMW",req.body)
+
     const {params,body} = req
     let merge = {...params,...body}
     try {
