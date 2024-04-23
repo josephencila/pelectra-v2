@@ -1,19 +1,15 @@
-import { TimePicker } from "antd";
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 function App() {
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-  };
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+
+      </Route>
+    )
+  )
 
   return (
-    <div>
-      <TimePicker
-        format="hh:mm"
-        onChange={(value) =>
-          onChange({ target: { name: "time", value: value } })
-        }
-      />
-    </div>
+   <RouterProvider router={router}/>
   );
 }
 
