@@ -7,12 +7,15 @@ import {
 import { AuthContextProvider } from "./context/AuthContext";
 import NotFoundPage from "./pages/NotFoundPage";
 import LandingPage from "./pages/LandingPage";
+import Layout from "./Layout";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<AuthContextProvider />}>
-        <Route index element={<LandingPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
       </Route>
     )
   );
