@@ -12,7 +12,8 @@ const createAppliances = async (req, res) => {
             data: {
                 userId,
                 appliancesName,
-                consumptionPerHr
+                consumptionPerHr,
+               
             }
         })
         return res.status(200).json({ message: 'Appliances successfully created.' })
@@ -35,7 +36,7 @@ const readAppliances = async (req, res) => {
                 userId: true,
                 appliancesId: true,
                 appliancesName: true,
-                consumptionPerHr: true
+                consumptionPerHr: true,
             }
         })
         return res.status(200).json({ data: allAppliances })

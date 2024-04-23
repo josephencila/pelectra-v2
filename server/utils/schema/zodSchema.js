@@ -25,7 +25,7 @@ const appliancesSchema = z.object({
 const monthlyAppliancesSchema = appliancesSchema.extend({
     appliancesId: z
         .string()
-        .uuid({ message: 'Invalid Appliances ID' })
+        .uuid({ message: 'Invalid Appliances ID.' })
         .min(1, { message: 'Appliances ID is required.' }),
     dailyUsage: z
         .number()
@@ -45,13 +45,14 @@ const monthlyAppliancesSchema = appliancesSchema.extend({
         .coerce
         .date({
             errorMap: (issue, { defaultError }) => ({
-                message: issue.code === "invalid_date" ? "That's not a date!" : defaultError,
+                message: issue.code === "invalid_date" ? "That's not a date." : defaultError,
 
             }),
         })
+
 }).superRefine((data, ctx) => {
     const days = getDaysInMonth(data.selectedAt)
-    if (data.daysInMonth > days ) {
+    if (data.daysInMonth > days) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: `Days in Month cannot be greaten than ${days}.`,
@@ -62,15 +63,64 @@ const monthlyAppliancesSchema = appliancesSchema.extend({
     }
 });
 
-const updateMonthlyAppliancesSchema = z.object({
+const updateAppliancesSchema = monthlyAppliancesSchema.and(z.object({
     monthlyAppliancesId: z
-    .string()
-    .uuid({ message: 'Invalid Monthly Appliances ID' })
-    .min(1, { message: 'Monthly Appliances ID is required.' }),
+        .string()
+        .uuid({ message: 'Invalid Monthly Appliances ID.' })
+        .min(1, { message: 'Monthly Appliances ID is required.' }),
+}))
+
+
+const monthlyExpensesSchema = z.object({
+    actualConsumption: z
+        .coerce
+        .number()
+        .min(0.000001, { message: "Monthly Actual Consumption is required." })
+        .gt(0, { message: 'Monthly Actual Consumption must be greater than 0.' }),
+
+    actualBillExpense: z
+        .coerce
+        .number()
+        .min(0.000001, { message: "Monthly Actual Bill Expense is required." })
+        .gt(0, { message: 'Monthly Actual Bill Expense must be greater than 0.' }),
+    selectedAt: z
+        .coerce
+        .date({
+            errorMap: (issue, { defaultError }) => ({
+                message: issue.code === "invalid_date" ? "That's not a date." : defaultError,
+
+            }),
+        })
 })
 
+const readMonthlyExpensesSchema = z.object({
+    monthlyExpenseId: z
+        .string()
+        .uuid({ message: 'Invalid Monthly Expense ID.' })
+        .min(1, { message: 'Monthly Expense ID is required.' }),
+
+})
+
+const updateMonthlyExpensesSchema = readMonthlyExpensesSchema.extend({
+    actualConsumption: z
+        .coerce
+        .number()
+        .min(0.000001, { message: "Monthly Actual Consumption is required." })
+        .gt(0, { message: 'Monthly Actual Consumption must be greater than 0.' }),
+
+    actualBillExpense: z
+        .coerce
+        .number()
+        .min(0.000001, { message: "Monthly Actual Bill Expense is required." })
+        .gt(0, { message: 'Monthly Actual Bill Expense must be greater than 0.' }),
+
+})
 
 module.exports = {
     appliancesSchema,
-    monthlyAppliancesSchema
+    monthlyAppliancesSchema,
+    updateAppliancesSchema,
+    monthlyExpensesSchema,
+    readMonthlyExpensesSchema,
+    updateMonthlyExpensesSchema
 }

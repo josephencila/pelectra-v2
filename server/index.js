@@ -1,14 +1,12 @@
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+
 //routes
 const appliancesRoutes = require('./routes/appliancesRoutes')
 const monthlyAppliancesRoutes = require('./routes/montlyAppliancesRoutes')
-const zodMiddleware = require('./middleware/zodMiddleware')
-const { monthlyAppliancesSchema } = require('./utils/schema/zodSchema')
-const userId = "aN34jHNc4HWDjFyM6OL4GQsAluN2"
+const montlyExpenses = require('./routes/montlyExpensesRoutes')
+
 require('dotenv').config()
 
 
@@ -25,16 +23,11 @@ app.use(cors({
 
 app.use(morgan('tiny'))
 
-BigInt.prototype.toJSON = function () {
-    return this.toString()
-}
-
-
 app.use('/api/v1/appliances', appliancesRoutes)
-
- app.use('/api/v1/montly-appliances', monthlyAppliancesRoutes)
-
+app.use('/api/v1/montly-appliances', monthlyAppliancesRoutes)
+app.use('/api/v1/monthly-expenses', montlyExpenses)
 
 app.listen(NODE_PORT, () => {
     console.log(`Server is running in port ${NODE_PORT}`)
 })
+

@@ -17,3 +17,4 @@ router.delete('/delete/:monthlyAppliancesId', deleteMonthlyAppliances)
 module.exports = router
 
 
+ 

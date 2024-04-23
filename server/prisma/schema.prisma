@@ -12,8 +12,8 @@ model Appliances {
   userId           String
   appliancesName   String
   consumptionPerHr Decimal  @db.Decimal(10, 3)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime @updatedAt @db.Timestamptz(6)
 }
 
 model MonthlyAppliances {
@@ -25,17 +25,17 @@ model MonthlyAppliances {
   dailyUsage          Int
   daysInMonth         Int
   consumptionPerMonth Decimal  @db.Decimal(10, 3)
-  selectedAt          DateTime
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  selectedAt          DateTime @db.Timestamptz(6)
+  createdAt           DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt           DateTime @updatedAt @db.Timestamptz(6)
 }
 
 model MonthlyExpenses {
   monthlyExpenseId  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId            String
   actualConsumption Decimal  @db.Decimal(10, 3)
-  actualBillExpense Int
-  selectedAt        DateTime
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  actualBillExpense Decimal  @db.Decimal(10, 3)
+  selectedAt        DateTime @db.Timestamptz(6)
+  createdAt         DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt         DateTime @updatedAt @db.Timestamptz(6)
 }
