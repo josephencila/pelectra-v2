@@ -16,7 +16,7 @@ model Appliances {
   updatedAt        DateTime @updatedAt
 }
 
-model MonthlyListOfAppliances {
+model MonthlyAppliances {
   monthlyAppliancesId String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId              String
   appliancesId        String   @db.Uuid
@@ -30,7 +30,7 @@ model MonthlyListOfAppliances {
   updatedAt           DateTime @updatedAt
 }
 
-model MonthlyListOfExpenses {
+model MonthlyExpenses {
   monthlyExpenseId  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId            String
   actualConsumption Decimal  @db.Decimal(10, 3)

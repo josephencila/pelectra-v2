@@ -11,7 +11,7 @@ CREATE TABLE "Appliances" (
 );
 
 -- CreateTable
-CREATE TABLE "MonthlyListOfAppliances" (
+CREATE TABLE "MonthlyAppliances" (
     "monthlyAppliancesId" UUID NOT NULL DEFAULT gen_random_uuid(),
     "userId" TEXT NOT NULL,
     "appliancesId" UUID NOT NULL,
@@ -24,11 +24,11 @@ CREATE TABLE "MonthlyListOfAppliances" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "MonthlyListOfAppliances_pkey" PRIMARY KEY ("monthlyAppliancesId")
+    CONSTRAINT "MonthlyAppliances_pkey" PRIMARY KEY ("monthlyAppliancesId")
 );
 
 -- CreateTable
-CREATE TABLE "MonthlyListOfExpenses" (
+CREATE TABLE "MonthlyExpenses" (
     "monthlyExpenseId" UUID NOT NULL DEFAULT gen_random_uuid(),
     "userId" TEXT NOT NULL,
     "actualConsumption" DECIMAL(10,3) NOT NULL,
@@ -37,5 +37,5 @@ CREATE TABLE "MonthlyListOfExpenses" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "MonthlyListOfExpenses_pkey" PRIMARY KEY ("monthlyExpenseId")
+    CONSTRAINT "MonthlyExpenses_pkey" PRIMARY KEY ("monthlyExpenseId")
 );

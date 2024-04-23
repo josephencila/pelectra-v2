@@ -33,6 +33,7 @@ const readAppliances = async (req, res) => {
             },
             select: {
                 userId: true,
+                appliancesId: true,
                 appliancesName: true,
                 consumptionPerHr: true
             }
@@ -49,19 +50,20 @@ const updateAppliancesById = async (req, res) => {
     const { appliancesId } = req.params
     const { appliancesName, consumptionPerHr } = req.body
     try {
-        const allData = await prisma.appliances.update(
+       await prisma.appliances.update(
             {
                 where: {
                     userId,
                     appliancesId
                 },
                 data: {
+
                     appliancesName,
                     consumptionPerHr
                 }
             }
         )
-        return res.status(200).json({ data: allData })
+        return res.status(200).json({ message: 'Appliances successfully updated.' })
     } catch (error) {
         return res.status(400).json({ message: error.message ?? error })
     }
