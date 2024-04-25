@@ -4,8 +4,11 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import PasswordValidationCard from "../card/PasswordValidationCard";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 
 const SignUpForm = () => {
+  const { handleErrorType, errorMessage, multiRegex } = usePasswordValidation();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -19,12 +22,28 @@ const SignUpForm = () => {
     return togglePassword ? open : close;
   }, [togglePassword]);
 
-  const signInSchema = z.object({
+  const signUpForm = z.object({
     email: z
       .string()
-      .min(1, { message: "Email is a required field." })
-      .email("Email must be a valid email address."),
-    password: z.string().min(1, { message: "Password is a required field." }),
+      .min(1, { message: "Email is a required field" })
+      .email("Email must be a valid email address"),
+    password: z
+      .string()
+      .min(1, { message: "Password is a required field" })
+      .max(50,{message: 'Password maximum character is 50.'})
+      .superRefine((value, ctx) => {
+        multiRegex().map((rgx, idx) => {
+          if (!rgx.test(value)) {
+            handleErrorType(idx, false);
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: errorMessage[idx],
+            });
+          } else {
+            handleErrorType(idx, true);
+          }
+        });
+      }),
   });
 
   const onChange = (e) => {
@@ -49,7 +68,7 @@ const SignUpForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(signUpForm),
     mode: "onChange",
   });
 
@@ -114,7 +133,7 @@ const SignUpForm = () => {
         </div>
         <small className="text-red-500">{errors.password?.message}</small>
       </div>
-
+      <PasswordValidationCard />
       <div className="flex flex-col gap-1 justify-center items-center">
         <button
           type="submit"
