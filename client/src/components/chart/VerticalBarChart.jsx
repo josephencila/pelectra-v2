@@ -64,10 +64,6 @@ const VerticalBarChart = () => {
     return (ctx) => (ctx.dataset.data[ctx.dataIndex].x > 42 ? 90 : -70);
   }, []);
 
-  const memoizeSize = useMemo(() => {
-    return width <= 640 ? 10 : 15;
-  }, [width]);
-
   const options = {
     indexAxis: "x",
     responsive: true,
@@ -95,7 +91,7 @@ const VerticalBarChart = () => {
         labels: {
           title: {
             font: {
-              size: memoizeSize,
+              size: 10,
               weight: "bold",
             },
           },
@@ -123,11 +119,8 @@ const VerticalBarChart = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 p-2.5 h-auto w-auto max-w-5xl border border-solid">
-      <div className="relative h-xs w-full">
-        <Bar data={defaults} options={options} />
-      </div>
-      <PieChart />
+    <div className="bg-white rounded-sm  shadow-sm w-[99%] h-[99%] min-h-xs ">
+      <Bar data={defaults} options={options} className="p-2.5"  />
     </div>
   );
 };

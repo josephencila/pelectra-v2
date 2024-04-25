@@ -22,7 +22,7 @@ const TotalCard = () => {
   ];
 
   return (
-    <ul className="[grid-area: a] grid grid-cols-1 gap-1.5 w-full max-w-5xl list-none p-2.5 m-0 border border-solid
+    <ul className=" grid grid-cols-1 gap-1.5 w-full max-w-5xl list-none p-2.5 m-0 border border-solid
       md:grid-cols-4
     ">
       {consumption.map((est, idx) => {

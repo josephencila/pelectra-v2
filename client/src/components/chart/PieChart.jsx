@@ -55,6 +55,7 @@ const PieChart = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "right",
@@ -78,8 +79,8 @@ const PieChart = () => {
     },
   };
   return (
-    <div className="relative h-ss w-full">
-      <Pie data={pieData} options={options} />
+    <div className="bg-white rounded-sm shadow-sm w-[99%] h-[99%]  min-h-xs">
+      <Pie data={pieData}  options={options} className="p-2.5"/>
     </div>
   );
 };
