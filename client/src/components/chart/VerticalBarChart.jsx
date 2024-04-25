@@ -8,13 +8,15 @@ import {
   Legend,
 } from "chart.js";
 
-import { Bar } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 
 import "chartjs-plugin-datalabels";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import { useMemo, useState } from "react";
 import { newData } from "../../helpers/newData";
+import { useScreenSize } from "../../hooks/useScreenSize";
+import PieChart from "./PieChart";
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +29,7 @@ ChartJS.register(
 );
 
 const VerticalBarChart = () => {
-  const width = 640;
+  const { width } = useScreenSize();
   const val = 0;
   const [defaults, setDefaults] = useState({
     labels: [
@@ -69,7 +71,7 @@ const VerticalBarChart = () => {
   const options = {
     indexAxis: "x",
     responsive: true,
-
+    maintainAspectRatio: false,
     title: {
       display: true,
       text: "Monthly Consumption Comparison Chart",
@@ -120,17 +122,14 @@ const VerticalBarChart = () => {
     });
   }, []);
 
-  const memoizeBar = useMemo(() => {
-    return width <= 640 ? (
-      <Bar data={defaults} height={400} options={options} />
-    ) : (
-      <Bar data={defaults} options={options} />
-    );
-  }, []);
-
-  return <div className="flex flex-col p-2.5">
-    {memoizeBar}
-  </div>;
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 p-2.5 h-auto w-auto max-w-5xl border border-solid">
+      <div className="relative h-xs w-full">
+        <Bar data={defaults} options={options} />
+      </div>
+      <PieChart />
+    </div>
+  );
 };
 
 export default VerticalBarChart;
