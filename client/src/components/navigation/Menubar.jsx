@@ -5,8 +5,8 @@ import { Icon } from "@iconify/react";
 import pelectralogo from "../../assets/pelectra-logo.svg";
 import Sidebar from "./Sidebar";
 const Menubar = () => {
-  const { isAuth } = useAuth();
-  
+   const { isAuth } = useAuth();
+ 
   const [togglePassword, setTogglePassword] = useState(false);
 
   const memoizedNavLinks = useMemo(() => {
