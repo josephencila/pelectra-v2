@@ -10,6 +10,7 @@ import Layout from "./Layout";
 import NotFoundPage from "./pages/NotFoundPage";
 import LandingPage from "./pages/LandingPage";
 import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   const router = createBrowserRouter(
@@ -18,6 +19,7 @@ function App() {
         <Route element={<Layout />}>
           <Route index element={<LandingPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Route>
