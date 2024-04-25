@@ -16,7 +16,7 @@ export default {
         '2xl': '1536px',
       },
       height: {
-        'md': '768px',
+        '60px': '60px',
         'dvh': '100dvh',
         'dvh-60': 'calc(100dvh - 60px)'
       },
