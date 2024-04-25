@@ -15,7 +15,7 @@ const AuthContext = createContext({});
 
 export function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const [loading, setLoading] = useState(false);
   const [spinner, setSpinner] = useState(true);
   const navigate = useNavigate();

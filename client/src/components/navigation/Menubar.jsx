@@ -6,21 +6,11 @@ import pelectralogo from "../../assets/pelectra-logo.svg";
 import Sidebar from "./Sidebar";
 const Menubar = () => {
   const { isAuth } = useAuth();
-  const [togglePassword, setTogglePassword] = useState(true);
+  
+  const [togglePassword, setTogglePassword] = useState(false);
 
   const memoizedNavLinks = useMemo(() => {
     const publicLinks = [
-      {
-        name: "HOME",
-        path: "/",
-      },
-      {
-        name: "TRACKER",
-        path: "/tracker",
-      },
-    ];
-
-    const privateLinks = [
       {
         name: "Sign In",
         path: "/sign-in",
@@ -31,10 +21,26 @@ const Menubar = () => {
       },
     ];
 
+    const privateLinks = [
+      {
+        name: "HOME",
+        path: "index",
+      },
+      {
+        name: "TRACKER",
+        path: "/tracker",
+      },
+    ];
+
     return isAuth ? privateLinks : publicLinks;
   }, [isAuth]);
   
- 
+  
+
+  const memoizedAvatar = useMemo(()=>{
+    return isAuth ? 'flex' : 'hidden'
+  },[isAuth])
+
   return (
     <nav className="w-full h-[60px] z-10 bg-white ">
       <ul className="h-full w-full list-none p-0 m-0 grid grid-cols-[repeat(2,1fr)] grid-rows-[1fr] ">
@@ -58,8 +64,8 @@ const Menubar = () => {
               </div>
             );
           })}
-          <hr className="self-center h-10 w-.5  md:border  md:border-gray-200" />
-          <div className="hidden md:flex items-center">
+         <div className={`hidden md:${memoizedAvatar} items-center`}>
+         <hr className={`self-center h-10 w-.5 md:border md:border-gray-200`} />
             <NavLink
               to="#"
               className="flex items-center gap-1  px-2.5 py-0 no-underline"
@@ -67,14 +73,19 @@ const Menubar = () => {
               <div className="bg-purple-500 w-8 h-8 rounded-full"></div>
             </NavLink>
           </div>
-          <div className=" flex items-center  md:hidden ">
-            <button type="button">
+          <div className="flex items-center  md:hidden ">
+            <button type="button" onClick={() => setTogglePassword(true)}>
               <Icon icon="material-symbols:menu" className="w-8 h-8 mx-2" />
             </button>
           </div>
         </li>
       </ul>
-       <Sidebar memoizedNavLinks={memoizedNavLinks} togglePassword={togglePassword}/>
+      <Sidebar
+        memoizedNavLinks={memoizedNavLinks}
+        memoizedAvatar={memoizedAvatar}
+        togglePassword={togglePassword}
+        setTogglePassword={setTogglePassword}
+      />
     </nav>
   );
 };
