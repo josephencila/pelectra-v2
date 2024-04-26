@@ -42,8 +42,8 @@ const Menubar = () => {
   },[isAuth])
 
   return (
-    <nav className="w-full h-[60px] z-10 bg-white ">
-      <ul className="h-full w-full list-none p-0 m-0 grid grid-cols-[repeat(2,1fr)] grid-rows-[1fr] ">
+    <nav className="flex justify-center w-full h-[60px] z-10 bg-white ">
+      <ul className="h-full w-full max-w-5xl list-none p-0 m-0 grid grid-cols-[repeat(2,1fr)] grid-rows-[1fr] ">
         <li className="flex items-center">
           <NavLink
             to="#"
