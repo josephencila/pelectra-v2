@@ -68,14 +68,7 @@ const VerticalBarChart = () => {
     indexAxis: "x",
     responsive: true,
     maintainAspectRatio: false,
-    title: {
-      display: true,
-      text: "Monthly Consumption Comparison Chart",
-    },
-
-    legend: {
-      position: "top",
-    },
+   
 
     plugins: {
       datalabels: {
@@ -96,6 +89,14 @@ const VerticalBarChart = () => {
             },
           },
         },
+      },
+      title: {
+        display: true,
+        text: "Monthly Consumption Comparison Chart",
+      },
+  
+      legend: {
+        position: "top",
       },
     },
   };
