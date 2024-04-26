@@ -1,3 +1,5 @@
+import { Icon } from "@iconify/react";
+
 const MonthlyAppliancesTable = () => {
   const headerName = [
     {
@@ -19,18 +21,56 @@ const MonthlyAppliancesTable = () => {
       name: "Action",
     },
   ];
- 
+
+  const mockData = [
+    {
+      appliancesName: "Rice Cooker",
+      consumptionPerHr: "0.2",
+      dailyUsage: 1,
+      daysInMonth: 30,
+      consumptionPerMonth: 3,
+    },
+    {
+      appliancesName: "TV",
+      consumptionPerHr: "0.2",
+      dailyUsage: 1,
+      daysInMonth: 30,
+      consumptionPerMonth: 3,
+    },
+    {
+      appliancesName: "Computer",
+      consumptionPerHr: "0.2",
+      dailyUsage: 1,
+      daysInMonth: 30,
+      consumptionPerMonth: 3,
+    },
+    {
+      appliancesName: "Electric Fan",
+      consumptionPerHr: "0.2",
+      dailyUsage: 1,
+      daysInMonth: 30,
+      consumptionPerMonth: 3,
+    },
+    {
+      appliancesName: "Refrigerator",
+      consumptionPerHr: "0.2",
+      dailyUsage: 1,
+      daysInMonth: 30,
+      consumptionPerMonth: 3,
+    },
+  ];
+
   return (
-    <div className="grid  p-2.5 border border-solid">
-      <table role="table" className="border border-solid">
-        <thead role="rowgroup">
+    <div className="grid items-start p-2.5 border border-slate-100">
+      <table role="table" className="bg-white border border-slate-100">
+        <thead role="rowgroup" className="">
           <tr role="row">
             {headerName.map((h, idx) => {
               return (
                 <th
                   key={idx}
                   role="columnHeader"
-                  className="border border-black"
+                  className="border border-slate-100  p-2.5"
                 >
                   {h.name}
                 </th>
@@ -39,46 +79,38 @@ const MonthlyAppliancesTable = () => {
           </tr>
         </thead>
         <tbody role="rowgroup">
-          <tr role="row">
-            <td role="cell">James</td>
-            <td role="cell">Matman</td>
-            <td role="cell">Chief Sandwich Eater</td>
-            <td role="cell">Lettuce Green</td>
-            <td role="cell">Trek</td>
-           
-          </tr>
-          <tr role="row">
-            <td role="cell">The</td>
-            <td role="cell">Tick</td>
-            <td role="cell">Crimefighter Sorta</td>
-            <td role="cell">Blue</td>
-            <td role="cell">Wars</td>
-           
-          </tr>
-          <tr role="row">
-            <td role="cell">Jokey</td>
-            <td role="cell">Smurf</td>
-            <td role="cell">Giving Exploding Presents</td>
-            <td role="cell">Smurflow</td>
-            <td role="cell">Smurf</td>
-           
-          </tr>
-          <tr role="row">
-            <td role="cell">Cindy</td>
-            <td role="cell">Beyler</td>
-            <td role="cell">Sales Representative</td>
-            <td role="cell">Red</td>
-            <td role="cell">Wars</td>
-           
-          </tr>
-          <tr role="row">
-            <td role="cell">Captain</td>
-            <td role="cell">Cool</td>
-            <td role="cell">Tree Crusher</td>
-            <td role="cell">Blue</td>
-            <td role="cell">Wars</td>
-           
-          </tr>
+          {mockData.map((m, idx) => {
+            return (
+              <tr role="row" key={idx}>
+                <td role="cell" className="border border-slate-100  p-2.5">
+                  {m.appliancesName}
+                </td>
+                <td role="cell" className="border border-slate-100  p-2.5">
+                  {m.consumptionPerHr}
+                </td>
+                <td role="cell" className="border border-slate-100  p-2.5">
+                  {m.dailyUsage}
+                </td>
+                <td role="cell" className="border border-slate-100  p-2.5">
+                  {m.daysInMonth}
+                </td>
+                <td role="cell" className="border border-slate-100  p-2.5">
+                  {m.consumptionPerHr}
+                </td>
+                <td
+                  role="cell"
+                  className="border border-slate-100  p-2.5 flex gap-1"
+                >
+                  <button>
+                    <Icon icon="material-symbols:edit-outline" />
+                  </button>
+                  <button>
+                    <Icon icon="mdi:trash-can-outline" />
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
