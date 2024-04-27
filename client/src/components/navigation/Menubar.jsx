@@ -5,9 +5,9 @@ import { Icon } from "@iconify/react";
 import pelectralogo from "../../assets/pelectra-logo.svg";
 import Sidebar from "./Sidebar";
 const Menubar = () => {
-    const { isAuth } = useAuth();
-  
-  const [togglePassword, setTogglePassword] = useState(false);
+    // const { isAuth } = useAuth();
+    const isAuth = true
+  const [toggleSidebar, setToggleSidebar] = useState(false);
 
   const memoizedNavLinks = useMemo(() => {
     const publicLinks = [
@@ -24,7 +24,7 @@ const Menubar = () => {
     const privateLinks = [
       {
         name: "HOME",
-        path: "index",
+        path: "/",
       },
       {
         name: "TRACKER",
@@ -46,7 +46,7 @@ const Menubar = () => {
       <ul className="h-full w-full max-w-5xl list-none p-0 m-0 grid grid-cols-[repeat(2,1fr)] grid-rows-[1fr] ">
         <li className="flex items-center">
           <NavLink
-            to="#"
+            to="/"
             className="flex items-center gap-1 px-2.5 py-0 no-underline"
           >
             <img src={pelectralogo} alt="pelectra-logo" className="w-9 h-9" />
@@ -58,9 +58,9 @@ const Menubar = () => {
           {memoizedNavLinks.map((link, idx) => {
             return (
               <div className="hidden md:flex md:items-center" key={idx}>
-                <NavLink to="#" className="px-2 py-0 no-underline text-white">
+                <NavLink  to={link.path} className="px-2 py-0 no-underline text-white">
                   {link.name}
-                </NavLink>
+                </NavLink >
               </div>
             );
           })}
@@ -74,7 +74,7 @@ const Menubar = () => {
             </NavLink>
           </div>
           <div className="flex items-center  md:hidden ">
-            <button type="button" onClick={() => setTogglePassword(true)}>
+            <button type="button" onClick={() => setToggleSidebar(true)}>
               <Icon icon="material-symbols:menu" className="w-8 h-8 mx-2 text-white" />
             </button>
           </div>
@@ -83,8 +83,8 @@ const Menubar = () => {
       <Sidebar
         memoizedNavLinks={memoizedNavLinks}
         memoizedAvatar={memoizedAvatar}
-        togglePassword={togglePassword}
-        setTogglePassword={setTogglePassword}
+        toggleSidebar={toggleSidebar}
+        setToggleSidebar={setToggleSidebar}
       />
     </nav>
   );

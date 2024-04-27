@@ -1,17 +1,23 @@
 import { Icon } from "@iconify/react";
 import PropTypes from "prop-types";
 import { useMemo } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = ({
   memoizedNavLinks,
   memoizedAvatar,
-  togglePassword,
-  setTogglePassword,
+  toggleSidebar,
+  setToggleSidebar,
 }) => {
+  const navigate = useNavigate()
   const toggled = useMemo(() => {
-    return togglePassword ? "fixed" : "hidden";
-  }, [togglePassword]);
+    return toggleSidebar ? "fixed" : "hidden";
+  }, [toggleSidebar]);
+
+  const handleToggleSibar = (path) => {
+    setToggleSidebar(false)
+    navigate(path)
+  };
 
   return (
     <ul
@@ -21,7 +27,7 @@ const Sidebar = ({
       <div className=" flex items-center justify-end    h-[60px]">
         <button
           type="button"
-          onClick={() => setTogglePassword(false)}
+          onClick={() => setToggleSidebar(false)}
           className="px-2.5"
         >
           <Icon
@@ -30,9 +36,7 @@ const Sidebar = ({
           />
         </button>
       </div>
-      <div
-        className={`${memoizedAvatar} items-center  h-[60px]`}
-      >
+      <div className={`${memoizedAvatar} items-center  h-[60px]`}>
         <NavLink
           to="#"
           className="flex items-center gap-1  px-2.5 py-0 no-underline"
@@ -46,9 +50,13 @@ const Sidebar = ({
             className="flex items-center border border-slate-800 h-[60px] md:hidden"
             key={idx}
           >
-            <NavLink to="#" className=" px-2 py-0 no-underline text-white">
+            <button
+              type="button"
+              onClick={() => handleToggleSibar(link.path)}
+              className=" px-2 py-0 no-underline text-white"
+            >
               {link.name}
-            </NavLink>
+            </button>
           </div>
         );
       })}
@@ -59,7 +67,7 @@ const Sidebar = ({
 export default Sidebar;
 Sidebar.propTypes = {
   memoizedNavLinks: PropTypes.array,
-  togglePassword: PropTypes.bool,
-  setTogglePassword: PropTypes.func,
+  toggleSidebar: PropTypes.bool,
+  setToggleSidebar: PropTypes.func,
   memoizedAvatar: PropTypes.string,
 };
