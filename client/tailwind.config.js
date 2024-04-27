@@ -6,7 +6,10 @@ export default {
   ],
   theme: {
     extend: {
-     
+      backgroundColor:{
+        'hsl-black-1':'hsl(0 0% 0% / 0.5)',
+        'hsl-black-2':'hsl(0 0% 0% / 0.1)',
+      },
       width: {
         'xs': '320px',
         'ss': '480px',

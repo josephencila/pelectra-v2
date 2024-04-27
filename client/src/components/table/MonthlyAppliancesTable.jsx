@@ -61,7 +61,7 @@ const MonthlyAppliancesTable = () => {
   ];
 
 
-  const tdCell = `p-4 
+  const tdCell = `p-4 text-white
    last:flex last:flex-row last:items-center last:justify-end last:gap-1.5 
    max-md:grid max-md:gap-3 max-md:px-4 max-md:py-3
    max-md:[&:not(:last-child)]:grid-cols-[21ch_auto]
@@ -72,14 +72,14 @@ const MonthlyAppliancesTable = () => {
   `
 
   return (
-    <div className=" w-full p-2.5 ">
-     <table role="table" className="w-full border-collapse p-4 ">
-      <caption className="p-4 text-left">Monthly Appliances</caption>
+    <div className=" w-full p-3 ">
+     <table role="table" className="bg-slate-900 w-full border-collapse p-4 rounded-md ">
+      <caption className="p-4 text-left  text-white">Monthly Appliances</caption>
         <thead role="rowgroup">
-          <tr role="row" >
+          <tr role="row" className="bg-slate-800" >
           {
             headerName.map((hn,idx)=>{
-              return <th role="columnheader" className=" p-4 text-left  max-md:hidden" key={idx}>
+              return <th role="columnheader" className=" p-4 text-left text-white max-md:hidden" key={idx}>
                 {hn.name}
                 </th>
             })
@@ -89,15 +89,15 @@ const MonthlyAppliancesTable = () => {
         <tbody role="rowgroup" >
                 {
                   mockData.map((m, idx) => {
-                    return <tr role="row" key={idx} className=" odd:bg-slate-100 border border-slate-200">
+                    return <tr role="row" key={idx} className=" bg-slate-800 odd:bg-slate-700  max-md:grid max-md:mb-1 max-md:rounded-md">
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Appliances_Name'] `}>{m.appliancesName}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Consumption_(kWh)'] `}>{m.consumptionPerHr}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Daily_Usage_(hr/s)'] `}>{m.dailyUsage}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Days_In_Month'] `}>{m.daysInMonth}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Consumption_(kWs/mo)'] `}>{m.consumptionPerMonth}</td>
                       <td role="cell" className={` ${tdCell} `}>
-                        <button className="pointer hover:text-blue-400  px-2 border border-slate-200">edit</button>
-                        <button className="pointer hover:text-blue-400 px-2 border border-slate-200">delete</button>
+                        <button className="pointer hover:text-purple-400 px-2 ">edit</button>
+                        <button className="pointer hover:text-purple-400 px-2 ">delete</button>
                       </td>
                     </tr>
                   })

@@ -61,10 +61,10 @@ const SignInForm = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="h-auto w-full max-w-md  grid grid-cols-1 content-start 
-     gap-5 p-5  rounded-md shadow-sm  bg-white "
+     gap-5 p-5 text-white bg-slate-800  rounded-md shadow-sm "
     >
       <div className=" flex flex-col">
-        <span className="font-bold">Sign In</span>
+        <span className="font-bold ">Sign In</span>
         <small>Enter your registered account.</small>
       </div>
       <div className="flex  flex-col gap-1">
@@ -73,7 +73,7 @@ const SignInForm = () => {
           type="text"
           name="email"
           placeholder="example@email.com"
-          className="p-2 rounded-md outline-none border border-slate-400"
+          className="bg-slate-700 text-white p-2 rounded-md outline-none "
           value={user.email}
           onChange={onChange}
           autoComplete="off"
@@ -91,13 +91,13 @@ const SignInForm = () => {
             Forgot Password?
           </NavLink>
         </div>
-        <div className="relative grid grid-cols-[1fr_50px]   border border-slate-400  rounded-md  bg-white">
+        <div className="bg-slate-700 text-white p-2 relative grid grid-cols-[1fr_50px]     rounded-md  ">
           <input
             type={memoizeToggle[0]}
             name="password"
             placeholder="••••••••••••"
             value={user.password}
-            className="p-2 outline-none w-full rounded-md"
+            className="bg-slate-700 text-white outline-none w-full rounded-md"
             autoComplete="off"
             onChange={onChange}
             {...register("password", {
@@ -116,7 +116,7 @@ const SignInForm = () => {
         <small className="text-red-500">{errors.password?.message}</small>
       </div>
 
-      <div className="flex flex-col gap-1 justify-center items-center">
+      <div className="flex flex-col gap-1 mt-4 justify-center items-center">
         <button
           type="submit"
           className="w-full p-2 rounded-md text-white bg-purple-600 hover:bg-purple-700"

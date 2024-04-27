@@ -16,7 +16,7 @@ const PasswordValidationCard = () => {
 
   const memoizedIconStatus = useMemo(() => {
     const isValid = ["text-green-500", "bx:check-circle"];
-    const inValid = ["text-slate-500", "bx:circle"];
+    const inValid = ["text-slate-400", "bx:circle"];
 
     return (stats) => (stats ? isValid : inValid);
   }, []);

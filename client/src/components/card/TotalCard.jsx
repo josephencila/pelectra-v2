@@ -5,14 +5,14 @@ const TotalCard = () => {
       totalConsumption: 200,
     },
     {
-      title: "Monthly Actual Consumption",
+      title: "Monthly Estimated Bill Expense ",
       totalConsumption: 173.66,
     },
   ];
 
   const bill = [
     {
-      title: "Monthly Estimated Bill Expense",
+      title: "Monthly Actual Consumption",
       totalBill: 1500.0,
     },
     {
@@ -22,17 +22,17 @@ const TotalCard = () => {
   ];
 
   return (
-    <ul className=" grid grid-cols-1 gap-1.5 w-full max-w-5xl list-none p-2.5 m-0 border border-solid
+    <ul className=" grid grid-cols-1 gap-1.5 w-full max-w-5xl list-none p-2.5 m-0 
       md:grid-cols-4
     ">
       {consumption.map((est, idx) => {
         return (
           <li
             key={idx}
-            className="h-full flex flex-col justify-center p-2.5 border-l-4 border-purple-600 bg-white"
+            className="h-full flex flex-col justify-center p-2.5 border-l-4 border-purple-600 bg-slate-800"
           >
-            <small className="text-purple-600">{est.title} </small>
-            <span className="font-bold">{est.totalConsumption} kWh</span>
+            <small className="text-white">{est.title} </small>
+            <span className="font-bold text-white">{est.totalConsumption} kWh</span>
           </li>
         );
       })}
@@ -41,10 +41,10 @@ const TotalCard = () => {
         return (
           <li
             key={idx}
-            className="flex flex-col  justify-center  p-2.5 border-l-4 border-cyan-500   bg-white"
+            className="flex flex-col  justify-center  p-2.5 border-l-4 border-cyan-500   bg-slate-800"
           >
-            <small className="text-cyan-500">{act.title} </small>
-            <span className="font-bold">{act.totalBill} Php</span>
+            <small className="text-white ">{act.title} </small>
+            <span className="font-bold text-white">{act.totalBill} Php</span>
           </li>
         );
       })}

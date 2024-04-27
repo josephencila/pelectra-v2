@@ -5,8 +5,8 @@ import { Icon } from "@iconify/react";
 import pelectralogo from "../../assets/pelectra-logo.svg";
 import Sidebar from "./Sidebar";
 const Menubar = () => {
-   const { isAuth } = useAuth();
- 
+  //  const { isAuth } = useAuth();
+  const isAuth= true
   const [togglePassword, setTogglePassword] = useState(false);
 
   const memoizedNavLinks = useMemo(() => {
@@ -42,7 +42,7 @@ const Menubar = () => {
   },[isAuth])
 
   return (
-    <nav className="flex justify-center w-full h-[60px] z-10 bg-white ">
+    <nav className="flex justify-center w-full h-[60px] z-10 bg-slate-900 ">
       <ul className="h-full w-full max-w-5xl list-none p-0 m-0 grid grid-cols-[repeat(2,1fr)] grid-rows-[1fr] ">
         <li className="flex items-center">
           <NavLink
@@ -50,7 +50,7 @@ const Menubar = () => {
             className="flex items-center gap-1 px-2.5 py-0 no-underline"
           >
             <img src={pelectralogo} alt="pelectra-logo" className="w-9 h-9" />
-            <span className="font-bold">PELECTRA</span>
+            <span className="font-bold text-white">PELECTRA</span>
           </NavLink>
         </li>
 
@@ -58,14 +58,14 @@ const Menubar = () => {
           {memoizedNavLinks.map((link, idx) => {
             return (
               <div className="hidden md:flex md:items-center" key={idx}>
-                <NavLink to="#" className="px-2 py-0 no-underline">
+                <NavLink to="#" className="px-2 py-0 no-underline text-white">
                   {link.name}
                 </NavLink>
               </div>
             );
           })}
          <div className={`hidden md:${memoizedAvatar} items-center`}>
-         <hr className={`self-center h-10 w-.5 md:border md:border-gray-200`} />
+         <hr className={`self-center h-10 w-.5 md:border md:border-slate-600`} />
             <NavLink
               to="#"
               className="flex items-center gap-1  px-2.5 py-0 no-underline"
@@ -75,7 +75,7 @@ const Menubar = () => {
           </div>
           <div className="flex items-center  md:hidden ">
             <button type="button" onClick={() => setTogglePassword(true)}>
-              <Icon icon="material-symbols:menu" className="w-8 h-8 mx-2" />
+              <Icon icon="material-symbols:menu" className="w-8 h-8 mx-2 text-white" />
             </button>
           </div>
         </li>

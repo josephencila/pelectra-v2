@@ -125,7 +125,7 @@ const VerticalBarChart = () => {
   }, []);
 
   return (
-    <div className="bg-slate-600  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs ">
+    <div className="bg-slate-800  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs ">
       <Bar data={defaults} options={options} className="p-2.5"  />
     </div>
   );

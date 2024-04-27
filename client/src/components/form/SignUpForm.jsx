@@ -80,7 +80,7 @@ const SignUpForm = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="h-auto w-full max-w-md  grid grid-cols-1 content-start 
-     gap-5 p-5  rounded-md shadow-sm  bg-white "
+     gap-5 p-5  rounded-md shadow-sm  text-white bg-slate-800 "
     >
       <div className=" flex flex-col">
         <span className="font-bold">Sign Up</span>
@@ -92,7 +92,7 @@ const SignUpForm = () => {
           type="text"
           name="email"
           placeholder="example@email.com"
-          className="p-2 rounded-md outline-none border border-slate-400"
+          className="p-2 rounded-md outline-none bg-slate-700 text-white"
           value={user.email}
           onChange={onChange}
           autoComplete="off"
@@ -103,20 +103,20 @@ const SignUpForm = () => {
         <small className="text-red-500">{errors.email?.message}</small>
       </div>
 
-      <div className="flex  flex-col gap-1">
+      <div className="flex   flex-col gap-1 ">
         <div className="flex justify-between">
           <label htmlFor="password"> Password </label>
           <NavLink className="hidden text-sm hover:underline">
             Forgot Password?
           </NavLink>
         </div>
-        <div className="relative grid grid-cols-[1fr_50px]   border border-slate-400  rounded-md  bg-white">
+        <div className="relative grid grid-cols-[1fr_50px]   bg-slate-700 text-white  rounded-md  ">
           <input
             type={memoizeToggle[0]}
             name="password"
             placeholder="••••••••••••"
             value={user.password}
-            className="p-2 outline-none w-full rounded-md"
+            className="bg-slate-700 text-white p-2 outline-none w-full rounded-md"
             autoComplete="off"
             onChange={onChange}
             {...register("password", {

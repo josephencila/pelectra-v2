@@ -87,7 +87,7 @@ const PieChart = () => {
     },
   };
   return (
-    <div className=" bg-slate-600  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs pl-5 pb-5 pr-5">
+    <div className=" bg-slate-800  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs pl-5 pb-5 pr-5">
       <Pie data={pieData}  options={options}  className=" p-2.5"/>
     </div>
   );
