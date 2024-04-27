@@ -36,13 +36,13 @@ const Sidebar = ({
           />
         </button>
       </div>
-      <div className={`${memoizedAvatar} items-center  h-[60px]`}>
-        <NavLink
-          to="#"
+      <div className={`${memoizedAvatar}  items-center  h-[60px]`}>
+        <button 
+          type="button"
           className="flex items-center gap-1  px-2.5 py-0 no-underline"
         >
           <div className="bg-purple-500 w-8 h-8 rounded-full"></div>
-        </NavLink>
+        </button>
       </div>
       {memoizedNavLinks.map((link, idx) => {
         return (
