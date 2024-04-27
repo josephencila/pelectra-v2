@@ -9,7 +9,7 @@ const PieChart = () => {
     var r = num >> 16;
     var g = (num >> 8) & 255;
     var b = num & 255;
-    return `rgb(${r}, ${g}, ${b},0.5)`;
+    return `rgb(${r}, ${g}, ${b},.95)`;
   }
 
   const appliances = [
@@ -63,10 +63,13 @@ const PieChart = () => {
       datalabels: {
         display: true,
         color: "black",
+        backgroundColor: 'white',
+        borderRadius: 50,
         labels: {
           title: {
             font: {
               weight: "bold",
+              size: 10
             },
           },
         },
@@ -75,12 +78,17 @@ const PieChart = () => {
       title: {
         display: true,
         text: "Monthly Appliances Consumption",
+        font:{
+          size: 16,
+          weight: 'normal',
+          color: ChartJS.defaults.color = "white"
+        }
       },
     },
   };
   return (
-    <div className="bg-white rounded-sm shadow-sm w-[99%] h-[99%]  min-h-xs  ">
-      <Pie data={pieData}  options={options} className="p-2.5"/>
+    <div className=" bg-slate-600  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs pl-5 pb-5 pr-5">
+      <Pie data={pieData}  options={options}  className=" p-2.5"/>
     </div>
   );
 };

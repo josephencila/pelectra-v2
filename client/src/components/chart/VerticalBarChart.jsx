@@ -73,7 +73,7 @@ const VerticalBarChart = () => {
     plugins: {
       datalabels: {
         display: true,
-        color: "black",
+        color: "white",
         align: "end",
         anchor: "end",
 
@@ -93,6 +93,11 @@ const VerticalBarChart = () => {
       title: {
         display: true,
         text: "Monthly Consumption Comparison Chart",
+        font:{
+          size: 16,
+          weight: 'normal',
+          color: ChartJS.defaults.color = "white"
+        }
       },
   
       legend: {
@@ -120,7 +125,7 @@ const VerticalBarChart = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-sm  shadow-sm w-[99%] h-[99%] min-h-xs ">
+    <div className="bg-slate-600  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs ">
       <Bar data={defaults} options={options} className="p-2.5"  />
     </div>
   );
