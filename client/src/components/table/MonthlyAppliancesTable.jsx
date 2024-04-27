@@ -90,7 +90,7 @@ const MonthlyAppliancesTable = () => {
         <tbody role="rowgroup" >
                 {
                   mockData.map((m, idx) => {
-                    return <tr role="row" key={idx} className=" bg-slate-800 odd:bg-slate-700  max-md:grid max-md:mb-1 max-md:rounded-md">
+                    return <tr role="row" key={idx} className=" bg-slate-800 odd:bg-slate-700  max-md:grid max-md:mb-1 ">
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Appliances_Name'] `}>{m.appliancesName}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Consumption_(kWh)'] `}>{m.consumptionPerHr}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Daily_Usage_(hr/s)'] `}>{m.dailyUsage}</td>
