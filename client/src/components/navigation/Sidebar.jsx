@@ -18,7 +18,7 @@ const Sidebar = ({
       className={`${toggled} left-0 right-0 bottom-0 top-0 list-none 
       p-0 m-0 grid grid-cols-[1fr] content-start bg-slate-900 md:hidden overflow-hidden`}
     >
-      <div className=" flex items-center justify-end  border border-slate-700  h-[60px]">
+      <div className=" flex items-center justify-end    h-[60px]">
         <button
           type="button"
           onClick={() => setTogglePassword(false)}
@@ -31,7 +31,7 @@ const Sidebar = ({
         </button>
       </div>
       <div
-        className={`${memoizedAvatar} items-center border border-slate-700 h-[60px]`}
+        className={`${memoizedAvatar} items-center  h-[60px]`}
       >
         <NavLink
           to="#"
@@ -43,7 +43,7 @@ const Sidebar = ({
       {memoizedNavLinks.map((link, idx) => {
         return (
           <div
-            className="flex items-center border border-slate-700 h-[60px] md:hidden"
+            className="flex items-center border border-slate-800 h-[60px] md:hidden"
             key={idx}
           >
             <NavLink to="#" className=" px-2 py-0 no-underline text-white">

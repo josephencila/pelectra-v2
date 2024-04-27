@@ -61,7 +61,8 @@ const MonthlyAppliancesTable = () => {
   ];
 
 
-  const tdCell = `p-4 text-white
+  const tdCell = `
+   p-4 text-white
    last:flex last:flex-row last:items-center last:justify-end last:gap-1.5 
    max-md:grid max-md:gap-3 max-md:px-4 max-md:py-3
    max-md:[&:not(:last-child)]:grid-cols-[21ch_auto]
@@ -73,8 +74,8 @@ const MonthlyAppliancesTable = () => {
 
   return (
     <div className=" w-full p-3 ">
-     <table role="table" className="bg-slate-900 w-full border-collapse p-4 rounded-md ">
-      <caption className="p-4 text-left  text-white">Monthly Appliances</caption>
+     <table role="table" className="bg-slate-900 w-full border-collapse p-4 rounded-md "> 
+      <caption className="p-4 text-left bg-slate-800  text-white max-md:rounded-md max-md:mb-1">Monthly Appliances</caption>
         <thead role="rowgroup">
           <tr role="row" className="bg-slate-800" >
           {
@@ -96,8 +97,8 @@ const MonthlyAppliancesTable = () => {
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Days_In_Month'] `}>{m.daysInMonth}</td>
                       <td role="cell" className={` ${tdCell} max-md:before:content-['Consumption_(kWs/mo)'] `}>{m.consumptionPerMonth}</td>
                       <td role="cell" className={` ${tdCell} `}>
-                        <button className="pointer hover:text-purple-400 px-2 ">edit</button>
-                        <button className="pointer hover:text-purple-400 px-2 ">delete</button>
+                        <button className="pointer text-purple-500 hover:text-purple-400 px-2 ">edit</button>
+                        <button className="pointer text-purple-500 hover:text-purple-400 px-2 ">delete</button>
                       </td>
                     </tr>
                   })
