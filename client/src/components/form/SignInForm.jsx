@@ -116,7 +116,7 @@ const SignInForm = () => {
         <small className="text-red-500">{errors.password?.message}</small>
       </div>
 
-      <div className="flex flex-col gap-1 mt-4 justify-center items-center">
+      <div className="flex flex-col gap-4 mt-4 justify-center items-center">
         <button
           type="submit"
           className="w-full p-2 rounded-md text-white bg-purple-600 hover:bg-purple-700"

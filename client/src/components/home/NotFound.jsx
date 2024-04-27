@@ -1,7 +1,7 @@
 import HeroMessage from "../hero/HeroMessage";
 
 const NotFound = () => {
-  const mainMessage = "404 Page Not Found";
+  const mainMessage = "404 PAGE NOT FOUND";
   const subMessage =
     "The page you are looking for doesn't exist or another error occured.";
   const navLink = "<- Go back";
