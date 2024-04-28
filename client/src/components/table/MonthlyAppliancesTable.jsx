@@ -65,7 +65,7 @@ const MonthlyAppliancesTable = () => {
    p-4 text-white
    last:flex last:flex-row last:items-center last:justify-end last:gap-1.5 
    max-md:grid max-md:gap-3 max-md:px-4 max-md:py-3
-   max-md:[&:not(:last-child)]:grid-cols-[21ch_auto]
+   max-md:[&:not(:last-child)]:grid-cols-[repeat(2,1fr)]
    max-md:last:grid-cols-[repeat(2,auto)]  
    max-md:first:pt-4
    max-md:last:pb-4
