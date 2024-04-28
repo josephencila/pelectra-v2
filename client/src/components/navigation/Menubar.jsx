@@ -76,17 +76,20 @@ const Menubar = () => {
               className={`self-center h-10 w-.5 md:border md:border-slate-600`}
             />
             <button
-              onBlur={(e)=>{
-                if(!e.currentTarget.contains(e.relatedTarget))
-                setToggleUserDropdown(false)
-               }}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget))
+                  setToggleUserDropdown(false);
+              }}
               type="button"
               onClick={() => setToggleUserDropdown(!toggleUserDropdown)}
               className="flex items-center gap-1  px-2.5 py-0 no-underline"
             >
               <div className="bg-purple-500 w-8 h-8 rounded-full"></div>
             </button>
-            <UserDropdown memoizedUserDropdown={memoizedUserDropdown} setToggleUserDropdown={setToggleUserDropdown} />
+            <UserDropdown
+              memoizedUserDropdown={memoizedUserDropdown}
+              setToggleUserDropdown={setToggleUserDropdown}
+            />
           </div>
 
           <div className="flex items-center  md:hidden ">
