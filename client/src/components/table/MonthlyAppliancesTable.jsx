@@ -4,8 +4,12 @@ import TableHead from "./TableHead";
 import NonEmptyTableRow from "./NonEmptyTableRow";
 import EmptyTableRow from "./EmptyTableRow";
 import TableFilter from "./TableFilter";
+import { useState } from "react";
 
 const MonthlyAppliancesTable = () => {
+  
+  const [currentDate,setCurrentDate] = useState(new Date())
+
   const mockData = [
     {
       appliancesName: "Rice Cooker",
@@ -44,9 +48,15 @@ const MonthlyAppliancesTable = () => {
     },
   ];
 
+
+  const onChange =(e)=>{
+   const {name,value} = e.target
+    console.log(name,value)
+  }
+
   return (
     <div className=" w-full p-3 ">
-      <TableFilter />
+      <TableFilter onChange={onChange} currentDate={currentDate}/>
       <table
         role="table"
         className="bg-slate-900 w-full border-collapse p-4 rounded-md "

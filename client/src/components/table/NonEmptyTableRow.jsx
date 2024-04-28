@@ -4,7 +4,7 @@ const NonEmptyTableRow = ({mockData}) => {
 
     const tdCell = `
     p-4 text-white
-    last:flex last:flex-row last:items-center last:justify-end last:gap-1.5 
+    last:flex last:flex-row last:items-center last:justify-center last:gap-1.5 
     max-md:grid max-md:gap-3 max-md:px-4 max-md:py-3
     max-md:[&:not(:last-child)]:grid-cols-[repeat(2,1fr)]
     max-md:last:grid-cols-[repeat(2,auto)]  
@@ -55,10 +55,10 @@ const NonEmptyTableRow = ({mockData}) => {
                 </td>
                 <td role="cell" className={`${tdCell} `}>
                   <button className="pointer text-purple-500 hover:text-purple-400 px-2 ">
-                    edit
+                    Edit
                   </button>
                   <button className="pointer text-purple-500 hover:text-purple-400 px-2 ">
-                    delete
+                    Delete
                   </button>
                 </td>
               </tr>
