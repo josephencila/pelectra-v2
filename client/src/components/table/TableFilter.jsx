@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Icon } from "@iconify/react";
+
 const TableFilter = ({ onChange, currentDate }) => {
   return (
     <div className="w-full h-60px grid grid-cols-[repeat(2,1fr)]  max-md:grid-cols-[1fr] max-md:h-auto bg-slate-700 max-md:bg-slate-800 ">
@@ -10,8 +10,9 @@ const TableFilter = ({ onChange, currentDate }) => {
       </div>
       <div className="flex flex-row max-md:justify-center  items-center justify-end p-2.5">
         <DatePicker
-          className=" bg-slate-700  text-center    max-md:bg-slate-800 w-[100px] p-0 m-0  text-purple-400 outline-none border border-purple-400 cursor-pointer"
-          calendarClassName="bg-slate-700 top-0 text-white [&>div>div>div]:hover:text-black  "
+          className=" bg-slate-700  text-center    max-md:bg-slate-800  p-0 m-0  text-purple-400 outline-none border border-purple-400 cursor-pointer"
+          calendarClassName="bg-slate-700 top-0 text-cyan-600"
+          
           dateFormat="MMMM yyyy"
           showMonthYearPicker
           selected={currentDate}

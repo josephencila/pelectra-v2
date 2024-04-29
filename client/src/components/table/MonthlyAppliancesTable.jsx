@@ -7,8 +7,7 @@ import TableFilter from "./TableFilter";
 import { useState } from "react";
 
 const MonthlyAppliancesTable = () => {
-  
-  const [currentDate,setCurrentDate] = useState(new Date())
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   const mockData = [
     {
@@ -48,15 +47,18 @@ const MonthlyAppliancesTable = () => {
     },
   ];
 
-
-  const onChange =(e)=>{
-   const {name,value} = e.target
-    console.log(name,value)
-  }
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentDate(value)
+  };
 
   return (
     <div className=" w-full p-3 ">
-      <TableFilter onChange={onChange} currentDate={currentDate}/>
+      <TableFilter
+        onChange={onChange}
+        currentDate={currentDate}
+      
+      />
       <table
         role="table"
         className="bg-slate-900 w-full border-collapse p-4 rounded-md "
