@@ -10,7 +10,7 @@ const TableFilter = ({ onChange, currentDate }) => {
       </div>
       <div className="flex flex-row max-md:justify-center  items-center justify-end p-2.5">
         <DatePicker
-          className=" bg-slate-700  text-center    max-md:bg-slate-800  p-0 m-0  text-purple-400 outline-none border border-purple-400 cursor-pointer"
+          className=" bg-slate-700  text-center max-md:bg-slate-800  p-0 m-0  text-purple-400 outline-none border border-purple-400 cursor-pointer"
           calendarClassName="bg-slate-700 top-0 text-cyan-600"
           
           dateFormat="MMMM yyyy"
