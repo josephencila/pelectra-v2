@@ -39,5 +39,5 @@ export default TableFilter;
 
 TableFilter.propTypes = {
   onChange: PropTypes.func,
-  currentDate: PropTypes.string,
+  currentDate: PropTypes.instanceOf(Date),
 };

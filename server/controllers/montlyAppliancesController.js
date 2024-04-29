@@ -40,9 +40,10 @@ const createMonthlyAppliances = async (req, res) => {
 }
 
 // desc read all monthly appliances with userid
-// route POST /api/v1/monthly-appliances/read
+// route POST /api/v1/monthly-appliances/read/:skip/:take
 // private
 const readMonthlyAppliances = async (req, res) => {
+    const {skip,take} = req.params
     try {
         const allMonthlyAppliances = await prisma.monthlyAppliances.findMany({
             where: {
@@ -58,7 +59,9 @@ const readMonthlyAppliances = async (req, res) => {
                 daysInMonth: true,
                 consumptionPerMonth: true,
                 selectedAt: true,
-            }
+            },
+           skip:parseInt(skip),
+           take:parseInt(take),
         })
 
         return res.status(200).json({ data: allMonthlyAppliances })

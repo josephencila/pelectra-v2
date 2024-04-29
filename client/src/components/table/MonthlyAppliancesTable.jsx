@@ -5,6 +5,7 @@ import NonEmptyTableRow from "./NonEmptyTableRow";
 import EmptyTableRow from "./EmptyTableRow";
 import TableFilter from "./TableFilter";
 import { useState } from "react";
+import TablePagination from "./TablePagination";
 
 const MonthlyAppliancesTable = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -69,6 +70,7 @@ const MonthlyAppliancesTable = () => {
           <EmptyTableRow mockData={mockData} />
         </tbody>
       </table>
+      <TablePagination/>
     </div>
   );
 };

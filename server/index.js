@@ -17,8 +17,8 @@ const app = express()
 app.use(express.json())
 
 app.use(cors({
-    methods: [''],
-    origin: ['POST', 'GET', 'PUT', 'DELETE']
+    origin : ['http://localhost:5000'],
+    methods: ['POST', 'GET', 'PUT', 'DELETE']
 }))
 
 app.use(morgan('tiny'))
