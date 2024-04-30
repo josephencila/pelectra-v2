@@ -1,5 +1,6 @@
-const { PrismaClient } = require('@prisma/client')
+const { Prisma, PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const { extractYearAndMonth } = require('../utils/helper')
 const userId = "aN34jHNc4HWDjFyM6OL4GQsAluN2"
 
 //NOTE: SELECTED DATE NEEDS TO BE ISO STRING
@@ -40,14 +41,19 @@ const createMonthlyAppliances = async (req, res) => {
 }
 
 // desc read all monthly appliances with userid
-// route POST /api/v1/monthly-appliances/read/:skip/:take
+// route POST /api/v1/monthly-appliances/read/:skip/:take/:selectedAt
 // private
 const readMonthlyAppliances = async (req, res) => {
-    const {skip,take} = req.params
+    const { skip, take, selectedAt } = req.params
     try {
-        const allMonthlyAppliances = await prisma.monthlyAppliances.findMany({
+
+        const query = {
             where: {
                 userId,
+                selectedAt: {
+                    lte: new Date(selectedAt).toISOString(),
+                    gte: new Date(selectedAt).toISOString()
+                }
             },
             select: {
                 monthlyAppliancesId: true,
@@ -60,11 +66,26 @@ const readMonthlyAppliances = async (req, res) => {
                 consumptionPerMonth: true,
                 selectedAt: true,
             },
-           skip:parseInt(skip),
-           take:parseInt(take),
+            orderBy:{
+                selectedAt: 'asc'
+            },
+            skip: parseInt(skip),
+            take: parseInt(take),
+            
+        }
+
+        const [allMonthlyAppliances, count] = await prisma.$transaction([
+            prisma.monthlyAppliances.findMany(query),
+            prisma.monthlyAppliances.count({ where: query.where })
+        ])
+
+        return res.status(200).json({
+            data: {
+                count: count,
+                appliances: allMonthlyAppliances
+            }
         })
 
-        return res.status(200).json({ data: allMonthlyAppliances })
     } catch (error) {
 
         return res.status(400).json({ message: error.message ?? error })
@@ -88,7 +109,7 @@ const updateMonthlyAppliances = async (req, res) => {
     } = req.body
 
     try {
-      await prisma.monthlyAppliances.update({
+        await prisma.monthlyAppliances.update({
             where: {
                 userId,
                 monthlyAppliancesId
@@ -118,9 +139,9 @@ const updateMonthlyAppliances = async (req, res) => {
 // private
 const deleteMonthlyAppliances = async (req, res) => {
     const { monthlyAppliancesId } = req.params
-  
+
     try {
-      await prisma.monthlyAppliances.delete({
+        await prisma.monthlyAppliances.delete({
             where: {
                 userId,
                 monthlyAppliancesId

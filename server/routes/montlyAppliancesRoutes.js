@@ -10,7 +10,7 @@ const {
 } = require('../controllers/montlyAppliancesController')
 
 router.post('/create', zodMiddleware(monthlyAppliancesSchema), createMonthlyAppliances)
-router.post('/read/:skip/:take', readMonthlyAppliances)
+router.post('/read/:skip/:take/:selectedAt', readMonthlyAppliances)
 router.put('/update/:monthlyAppliancesId', zodMiddleware(monthlyAppliancesSchema), updateMonthlyAppliances)
 router.delete('/delete/:monthlyAppliancesId', deleteMonthlyAppliances)
 
