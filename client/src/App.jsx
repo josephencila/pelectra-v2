@@ -13,6 +13,7 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import { PasswordValidationProvider } from "./context/PasswordValidationContext";
 import Tracker from "./pages/Tracker";
+import { MonthlyAppliancesProvider } from "./context/MonthlyAppliancesContext";
 
 function App() {
   const router = createBrowserRouter(
@@ -24,7 +25,9 @@ function App() {
           <Route element={<PasswordValidationProvider />}>
             <Route path="/sign-up" element={<SignUpPage />} />
           </Route>
-          <Route path="/tracker" element={<Tracker />} />
+          <Route element={<MonthlyAppliancesProvider />}>
+            <Route path="/tracker" element={<Tracker />} />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Route>
