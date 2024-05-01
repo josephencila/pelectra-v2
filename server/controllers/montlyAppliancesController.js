@@ -1,6 +1,6 @@
 const { Prisma, PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
-const { extractYearAndMonth } = require('../utils/helper')
+const { slicedYearAndMonth } = require('../utils/helper')
 const userId = "aN34jHNc4HWDjFyM6OL4GQsAluN2"
 
 //NOTE: SELECTED DATE NEEDS TO BE ISO STRING
@@ -51,8 +51,8 @@ const readMonthlyAppliances = async (req, res) => {
             where: {
                 userId,
                 selectedAt: {
-                    lte: new Date(selectedAt).toISOString(),
-                    gte: new Date(selectedAt).toISOString()
+                    lte: new Date(`${slicedYearAndMonth(selectedAt)}-31`).toISOString(),
+                    gte: new Date(`${slicedYearAndMonth(selectedAt)}-01`).toISOString()
                 }
             },
             select: {
@@ -66,12 +66,12 @@ const readMonthlyAppliances = async (req, res) => {
                 consumptionPerMonth: true,
                 selectedAt: true,
             },
-            orderBy:{
+            orderBy: {
                 selectedAt: 'asc'
             },
             skip: parseInt(skip),
             take: parseInt(take),
-            
+
         }
 
         const [allMonthlyAppliances, count] = await prisma.$transaction([

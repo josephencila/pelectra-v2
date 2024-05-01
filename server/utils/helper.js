@@ -7,9 +7,9 @@ const getDaysInMonth = (selectedDate) => {
 
 
 
-const extractYearAndMonth = (selectedDate) => {
-    const extracted = new Date("2024-04-29 21:47:43.518+08").toISOString().slice(0, 7).replace('T', ' ')
-    return extracted
+const slicedYearAndMonth = (selectedAt) => {
+    const sliced = new Date(selectedAt).toISOString().slice(0, 7).replace('T', ' ')
+    return sliced
 }
 
 
@@ -17,5 +17,5 @@ const extractYearAndMonth = (selectedDate) => {
 
 module.exports = {
     getDaysInMonth,
-    extractYearAndMonth
+    slicedYearAndMonth
 }
