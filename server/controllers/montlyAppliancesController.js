@@ -74,15 +74,17 @@ const readMonthlyAppliances = async (req, res) => {
 
         }
 
-        const [allMonthlyAppliances, count] = await prisma.$transaction([
+        const [skippedAppliances,allMonthlyAppliances, count] = await prisma.$transaction([
             prisma.monthlyAppliances.findMany(query),
+            prisma.monthlyAppliances.findMany({where: query.where}),
             prisma.monthlyAppliances.count({ where: query.where })
         ])
 
         return res.status(200).json({
             data: {
                 count: count,
-                appliances: allMonthlyAppliances
+                allMonthlyAppliances: allMonthlyAppliances,
+                skippedAppliances: skippedAppliances
             }
         })
 

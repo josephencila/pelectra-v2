@@ -1,13 +1,10 @@
-import PropTypes from "prop-types";
 import { useMemo } from "react";
+import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
 
-const TablePagination = ({
-  skip,
-  setSkip,
-  take,
-  pages,
-  finalPage,
-}) => {
+const TablePagination = () => {
+  const { skip, setSkip, take, finalPage, pages } =
+    useMonthlyAppliances();
+
   const prevPage = () => {
     if (skip === 0) {
       return null;
@@ -28,17 +25,15 @@ const TablePagination = ({
       page === skip ? "bg-purple-500 text-white" : "bg-tranparent-500";
   }, [skip]);
 
-  const memoizedPagination = useMemo(()=>{
-    return pages.length > 0
-      ? "flex  "
-      : "hidden";
-  },[pages])
+  const memoizedPagination = useMemo(() => {
+    return pages.length > 0 ? "flex  " : "hidden";
+  }, [pages]);
 
-  console.log(pages.length,memoizedPagination);
   return (
     <div className="h-60px w-full bg-slate-800 grid grid-cols">
-      
-      <div className={`${memoizedPagination} flex-row items-center justify-end  p-2.5  gap-2`}>
+      <div
+        className={`${memoizedPagination} flex-row items-center justify-end  p-2.5  gap-2`}
+      >
         <button
           className="px-1 border text-purple-500 border-purple-500"
           onClick={prevPage}
@@ -70,10 +65,3 @@ const TablePagination = ({
 };
 
 export default TablePagination;
-TablePagination.propTypes = {
-  skip: PropTypes.number,
-  setSkip: PropTypes.func,
-  take: PropTypes.number,
-  pages: PropTypes.array,
-  finalPage: PropTypes.number,
-};

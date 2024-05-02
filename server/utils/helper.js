@@ -14,8 +14,8 @@ const slicedYearAndMonth = (selectedAt) => {
 
 
 
-
 module.exports = {
     getDaysInMonth,
-    slicedYearAndMonth
+    slicedYearAndMonth,
+   
 }

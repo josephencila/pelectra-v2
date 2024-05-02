@@ -1,13 +1,13 @@
-import PropTypes from "prop-types";
 import { useMemo } from "react";
+import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
 
-const EmptyTableRow = ({ mockData }) => {
+const EmptyTableRow = () => {
+  const { allData } = useMonthlyAppliances();
 
-    const memoizeTable = useMemo(() => {
-        return mockData.length > 0 ? "hidden max-md:hidden" : "";
-      }, [mockData]);
+  const memoizeTable = useMemo(() => {
+    return allData.skippedAppliances.length > 0 ? "hidden max-md:hidden" : "";
+  }, [allData.skippedAppliances]);
 
-      
   return (
     <tr
       role="row"
@@ -25,6 +25,3 @@ const EmptyTableRow = ({ mockData }) => {
 };
 
 export default EmptyTableRow;
-EmptyTableRow.propTypes = {
-    mockData: PropTypes.array,
-};
