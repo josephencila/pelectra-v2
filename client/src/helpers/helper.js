@@ -14,6 +14,14 @@ export const sumAll = (object) => {
   const sum = object.reduce((s, k) => {
     return s + parseFloat(k.consumptionPerMonth);
   }, 0);
-  console.log(roundTo3Decimals(sum,3))
+ 
   return roundTo3Decimals(sum,3);
+};
+
+export const removeDuplicateDate = (object) => {
+  const noDuplicate = object.reduce((s, k) => {
+    return s.includes(k) ? s : [...s, k];
+  },[]);
+ 
+  return noDuplicate;
 };

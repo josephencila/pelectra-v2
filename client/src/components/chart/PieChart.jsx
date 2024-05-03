@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 const PieChart = () => {
+const {allData} = useMonthlyAppliances()
+
   function getRandomRgb() {
     var num = Math.floor(0xffffff * Math.random()).toFixed();
     var r = num >> 16;
@@ -12,25 +16,7 @@ const PieChart = () => {
     return `rgb(${r}, ${g}, ${b},.95)`;
   }
 
-  const appliances = [
-    {
-      appliances: "Refrigerator",
-      consumption: 0.2,
-      start_At: "",
-      end_At: "",
-      totalDuration: 12,
-      totalConsumption: 2.4,
-      created_At: Date.now(),
-      updated_At: Date.now(),
-    },
-  ];
-  // var d1 = Date.parse("6:30 am");
-  // var d2 = Date.parse("11:00 pm");
 
-  // var diff = new TimeSpan(d2 - d1);
-
-  // console.log("Hours: ", diff.hours);
-  // console.log("Minutes: ", diff.minutes);
 
   const [pieData, setPieData] = useState({
     labels: [

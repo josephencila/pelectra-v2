@@ -13,10 +13,11 @@ import { Bar, Pie } from "react-chartjs-2";
 import "chartjs-plugin-datalabels";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { newData } from "../../helpers/newData";
-import { useScreenSize } from "../../hooks/useScreenSize";
-import PieChart from "./PieChart";
+
+import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
+import { removeDuplicateDate } from "../../helpers/helper";
 
 ChartJS.register(
   CategoryScale,
@@ -29,23 +30,26 @@ ChartJS.register(
 );
 
 const VerticalBarChart = () => {
-  const { width } = useScreenSize();
+  const { currentDate, allData } = useMonthlyAppliances();
+  const [monthlyAppliancesByYear,setMonthlyAppliancesByYear] = useState([])
+  const labels = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   const val = 0;
   const [defaults, setDefaults] = useState({
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: labels,
     datasets: [
       {
         label: "Estimated",
@@ -68,7 +72,6 @@ const VerticalBarChart = () => {
     indexAxis: "x",
     responsive: true,
     maintainAspectRatio: false,
-   
 
     plugins: {
       datalabels: {
@@ -93,26 +96,62 @@ const VerticalBarChart = () => {
       title: {
         display: true,
         text: "Monthly Consumption Comparison Chart",
-        font:{
+        font: {
           size: 16,
-          weight: 'normal',
-          color: ChartJS.defaults.color = "white"
-        }
+          weight: "normal",
+          color: (ChartJS.defaults.color = "white"),
+        },
       },
-  
+
       legend: {
         position: "top",
       },
     },
   };
 
+  const BASE_URL_MONTHLY_APPLIANCES_BY_YEAR =
+    "http://localhost:4000/api/v1/montly-appliances/read";
+
+  useEffect(() => {
+    const fetchMonthlyAppliancesByYear = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL_MONTHLY_APPLIANCES_BY_YEAR}/${currentDate}`,
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-type": "application/json",
+            },
+          }
+        );
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message ?? result);
+        }
+
+        const { monthlyAppliancesByYear } = result.data;
+        setMonthlyAppliancesByYear(monthlyAppliancesByYear)
+        // console.log("WEEWOO", removeDuplicateDate(byYear(monthlyAppliancesByYear)).map(date => labels[date]));
+      } catch (error) {
+        console.log(error.message ?? error);
+      }
+    };
+    fetchMonthlyAppliancesByYear();
+  }, [currentDate]);
+
+  // console.log(newData[val].consumption.map((est) => est.month));
+ 
+  
+  console.log(monthlyAppliancesByYear.map(all=> all.consumptionPerMonth))
   useMemo(() => {
     setDefaults({
-      labels: newData[val].consumption.map((est) => est.month),
+      labels: newData[val].consumption.map((est) => est.month) ,
       datasets: [
         {
           label: "Estimated",
-          data: newData[val].consumption.map((est) => est.estimated),
+          data: 0,
           backgroundColor: "#843BE0",
         },
         {
@@ -126,7 +165,7 @@ const VerticalBarChart = () => {
 
   return (
     <div className="bg-slate-800  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs ">
-      <Bar data={defaults} options={options} className="p-2.5"  />
+      <Bar data={defaults} options={options} className="p-2.5" />
     </div>
   );
 };

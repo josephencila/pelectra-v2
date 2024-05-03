@@ -74,9 +74,9 @@ const readMonthlyAppliances = async (req, res) => {
 
         }
 
-        const [skippedAppliances,allMonthlyAppliances, count] = await prisma.$transaction([
+        const [skippedAppliances, allMonthlyAppliances, count] = await prisma.$transaction([
             prisma.monthlyAppliances.findMany(query),
-            prisma.monthlyAppliances.findMany({where: query.where}),
+            prisma.monthlyAppliances.findMany({ where: query.where }),
             prisma.monthlyAppliances.count({ where: query.where })
         ])
 
@@ -85,6 +85,38 @@ const readMonthlyAppliances = async (req, res) => {
                 count: count,
                 allMonthlyAppliances: allMonthlyAppliances,
                 skippedAppliances: skippedAppliances
+            }
+        })
+
+    } catch (error) {
+
+        return res.status(400).json({ message: error.message ?? error })
+
+    }
+}
+
+// desc read all monthly appliances with userid
+// route POST /api/v1/monthly-appliances/read/:selectedAt
+// private
+const readMonthlyAppliancesByYear = async (req, res) => {
+    const { selectedAt } = req.params
+    const year = new Date(selectedAt).getFullYear()
+
+    try {
+
+        const monthlyAppliancesByYear =
+
+
+            await prisma.$queryRaw(
+                Prisma.sql`
+                SELECT "month",sum("consumptionPerMonth") FROM
+                ( SELECT DISTINCT(EXTRACT(MONTH FROM "selectedAt")) AS "month",
+                "consumptionPerMonth" FROM public."MonthlyAppliances"  WHERE "userId"=${userId} AND EXTRACT(YEAR FROM "selectedAt") = ${year} ORDER BY "month" ASC) 
+                 GROUP BY "month";`)
+
+        return res.status(200).json({
+            data: {
+                monthlyAppliancesByYear
             }
         })
 
@@ -161,6 +193,7 @@ const deleteMonthlyAppliances = async (req, res) => {
 module.exports = {
     createMonthlyAppliances,
     readMonthlyAppliances,
+    readMonthlyAppliancesByYear,
     updateMonthlyAppliances,
     deleteMonthlyAppliances
 }
