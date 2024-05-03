@@ -1,8 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
-import { sumAll } from "../helpers/helper";
-//import { sumAll } from "../helpers/helper";
 
 const { VITE_MONTHLY_APPLIANCES_BASE_URL } = import.meta.env;
 
@@ -13,7 +11,6 @@ export function MonthlyAppliancesProvider({ children }) {
 
   const [allData, setAllData] = useState({
     count: 0,
-    totalConsumption: 0,
     allMonthlyAppliances: [],
     skippedAppliances: [],
   });
@@ -50,7 +47,6 @@ export function MonthlyAppliancesProvider({ children }) {
 
         setAllData({
           count: count,
-          totalConsumption: sumAll(allMonthlyAppliances),
           allMonthlyAppliances: allMonthlyAppliances,
           skippedAppliances: skippedAppliances,
         });
