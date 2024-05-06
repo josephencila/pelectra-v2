@@ -6,6 +6,8 @@ const zodMiddleware = (schema) => {
 
     const {params,body} = req
     let merge = {...params,...body}
+
+    
     try {
       schema.parse(merge)
       return next()

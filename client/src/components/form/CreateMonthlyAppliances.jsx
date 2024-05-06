@@ -4,41 +4,88 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const CreateMonthlyAppliances = () => {
-  const [user, setUser] = useState({
-    : "",
-    password: "",
+import PropTypes from "prop-types";
+const CreateMonthlyAppliances = ({ setToggleCreate }) => {
+  const [allData, setAllData] = useState({
+    appliancesName: "",
+    wattage: "",
+    consumptionPerHr: "",
   });
 
-  const [togglePassword, setTogglePassword] = useState(false);
+  const toKwh = (wattage) => {
+    if (wattage <= 0) {
+      return 0;
+    }
+    const hour = 1;
+    const thou = 1000;
+    const kwh = (wattage * hour) / thou;
 
-  const memoizeToggle = useMemo(() => {
-    const open = ["text", "mdi:eye-off-outline"];
-    const close = ["password", "mdi:eye-outline"];
-    return togglePassword ? open : close;
-  }, [togglePassword]);
+    return kwh;
+  };
 
-  const signInSchema = z.object({
-    email: z
+  const createAppliances = z.object({
+    appliancesName: z
       .string()
-      .min(1, { message: "Email is a required field." })
-      .email("Email must be a valid email address."),
-    password: z.string().min(1, { message: "Password is a required field." }),
+      .min(1, { message: "Appliances Name is a required field." })
+      .max(50, { message: "Maximum Appliances Name is 50 characters." })
+      .superRefine((value, ctx) => {
+        const singleSpace = /^[a-zA-Z]+( [a-zA-Z]+)*$/;
+        if (!singleSpace.test(value)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message:
+              "Only alphabetical letters & single space between are allowed.",
+          });
+        } else {
+          return;
+        }
+      }),
+    wattage: z.coerce
+      .number({
+        errorMap: (issue, { defaultError }) => ({
+          message:
+            issue.code === "invalid_type"
+              ? " That's not a number."
+              : defaultError,
+        }),
+      })
+      .min(1, { message: "Wattage is a required field." })
+      .gte(0, { message: "Wattage must be greater than 0." })
+      .lte(20000, { message: "Wattage must be less than or equal 20000." }),
+    consumptionPerHr: z.coerce
+      .number({
+        errorMap: (issue, { defaultError }) => ({
+          message:
+            issue.code === "invalid_type"
+              ? "That's not a number."
+              : defaultError,
+        }),
+      })
+      .min(0.000001, { message: "Consumption per hour is a required field." })
+      .gt(0, { message: "Consumption per hour must be greater than 0." }),
   });
-
   const onChange = (e) => {
     const { name, value } = e.target;
-    let blockEmoji = /^[a-zA-Z\s&\d&$&+,:;=?@#|'<>.^*()%!-]*$/
-    let val = value;
+    const blockEmoji = /^[a-zA-Z\s&\d&$&+,:;=?@#|'<>.^*()%!-]*$/;
+    const val = value;
 
-     if(!blockEmoji.test(value)){
-      return
-     }
+    if (!blockEmoji.test(value)) {
+      return;
+    }
 
-    val = val.replace(" ", "");
-   
-    setUser((prevState) => ({
+    if (name === "wattage") {
+      if (isNaN(val)) {
+        return;
+      }
+
+      setAllData((prevState) => ({
+        ...prevState,
+        [name]: val,
+        ["consumptionPerHr"]: toKwh(val),
+      }));
+    }
+
+    setAllData((prevState) => ({
       ...prevState,
       [name]: val,
     }));
@@ -49,83 +96,119 @@ const CreateMonthlyAppliances = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(createAppliances),
     mode: "onChange",
   });
 
+  const create = async() => {
+    try {
+      const response =  await fetch("http://localhost:4000/api/v1/appliances/create", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(allData),
+      });
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.log(error.message ?? error);
+    }
+  };
+
   const onSubmit = () => {
-    // signIn(user.email, user.password);
+   create()
+   setToggleCreate(false)
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="h-auto w-full max-w-md  grid grid-cols-1 content-start 
+    <div className="fixed left-0 right-0 top-0 bottom-0 bg-slate-900  flex justify-center items-center ">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="h-auto w-full max-w-md  grid grid-cols-1 content-start 
      gap-5 p-5 text-white bg-slate-800  rounded-md shadow-sm "
-    >
-      <div className=" flex flex-col">
-        <span className="font-bold ">Sign In</span>
-        <small>Enter your registered account.</small>
-      </div>
-      <div className="flex  flex-col gap-1">
-        <label htmlFor="email">Email </label>
-        <input
-          type="text"
-          name="email"
-          placeholder="example@email.com"
-          className="bg-slate-700 text-white p-2 rounded-md outline-none "
-          value={user.email}
-          onChange={onChange}
-          autoComplete="off"
-          {...register("email", {
-            onChange: onChange,
-          })}
-        />
-        <small className="text-red-500">{errors.email?.message}</small>
-      </div>
-
-      <div className="flex  flex-col gap-1">
-        <div className="flex justify-between">
-          <label htmlFor="password"> Password </label>
-          <NavLink className="hidden text-sm hover:underline">
-            Forgot Password?
-          </NavLink>
+      >
+        <div className=" flex flex-col">
+          <span className="font-bold ">Create a new appliances</span>
         </div>
-        <div className="bg-slate-700 text-white p-2 relative grid grid-cols-[1fr_50px]     rounded-md  ">
+        <div className="flex  flex-col gap-1">
+          <label htmlFor="appliancesName">Appliances Name:</label>
           <input
-            type={memoizeToggle[0]}
-            name="password"
-            placeholder="••••••••••••"
-            value={user.password}
-            className="bg-slate-700 text-white outline-none w-full rounded-md"
-            autoComplete="off"
+            type="text"
+            name="appliancesName"
+            placeholder="Television"
+            className="bg-slate-700 text-white p-2 rounded-md outline-none "
+            value={allData.appliancesName}
             onChange={onChange}
-            {...register("password", {
+            autoComplete="off"
+            {...register("appliancesName", {
               onChange: onChange,
             })}
-         
           />
+          <small className="text-red-500">
+            {errors.appliancesName?.message}
+          </small>
+        </div>
+
+        <div className="flex  flex-col gap-1">
+          <label htmlFor="wattage">Wattage:</label>
+          <input
+            type="text"
+            name="wattage"
+            placeholder="60"
+            className="bg-slate-700 text-white p-2 rounded-md outline-none "
+            value={allData.wattage}
+            onChange={onChange}
+            autoComplete="off"
+            {...register("wattage", {
+              onChange: onChange,
+            })}
+          />
+          <small className="text-red-500">{errors.wattage?.message}</small>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="consumptionPerHr">Consumption (kWh):</label>
+          <input
+            type="text"
+            name="consumptionPerHr"
+            placeholder="0.6"
+            className="bg-slate-700 text-white p-2 rounded-md outline-none "
+            value={allData.consumptionPerHr}
+            onChange={onChange}
+            autoComplete="off"
+            {...register("consumptionPerHr", {
+              onChange: onChange,
+            })}
+          />
+          <small className="text-red-500">
+            {errors.consumptionPerHr?.message}
+          </small>
+        </div>
+
+        <div className="flex flex-row gap-4 mt-4 justify-between items-center">
           <button
-            onClick={() => setTogglePassword(!togglePassword)}
-            type="button"
-            className=" flex justify-center items-center  rounded-md"
+            type="submit"
+            className="w-full p-2 rounded-md text-white bg-purple-600 hover:bg-purple-700"
           >
-            <Icon icon={memoizeToggle[1]} className="w-5 h-5 " />
+            Create
+          </button>
+          <button
+            onClick={() => setToggleCreate(false)}
+            type="button"
+            className="w-full p-2 rounded-md text-white bg-slate-500 hover:bg-slate-600"
+          >
+            Cancel
           </button>
         </div>
-        <small className="text-red-500">{errors.password?.message}</small>
-      </div>
-
-      <div className="flex flex-col gap-4 mt-4 justify-center items-center">
-        <button
-          type="submit"
-          className="w-full p-2 rounded-md text-white bg-purple-600 hover:bg-purple-700"
-        >
-          Sign In
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
 export default CreateMonthlyAppliances;
+
+CreateMonthlyAppliances.propTypes = {
+  setToggleCreate: PropTypes.func,
+};

@@ -6,7 +6,7 @@ const userId = "aN34jHNc4HWDjFyM6OL4GQsAluN2"
 // private
 const createAppliances = async (req, res) => {
     const { appliancesName, consumptionPerHr } = req.body
-
+    
     try {
         await prisma.appliances.create({
             data: {
@@ -44,6 +44,7 @@ const readAppliances = async (req, res) => {
         return res.status(400).json({ message: error.message ?? error })
     }
 }
+
 // desc update appliances using userid and appliancesid
 // route PUT /api/v1/appliances/update/:userId/:appliancesId
 // private

@@ -16,12 +16,18 @@ const appliancesSchema = z.object({
                 return
             }
         }),
-    consumptionPerHr: z
-        .coerce
-        .number()
-        .min(0.000001, { message: "Consumption per hour is required." })
-        .gt(0, { message: 'Consumption per hour must be greater than 0.' })
-})
+        consumptionPerHr: z.coerce
+        .number({
+          errorMap: (issue, { defaultError }) => ({
+            message:
+              issue.code === "invalid_type"
+                ? "That's not a number."
+                : defaultError,
+          }),
+        })
+        .min(0.000001, { message: "Consumption per hour required." })
+        .gt(0, { message: "Consumption per hour must be greater than 0." }),
+  })
 const monthlyAppliancesSchema = appliancesSchema.extend({
     appliancesId: z
         .string()
