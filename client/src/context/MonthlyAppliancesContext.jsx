@@ -50,7 +50,6 @@ export function MonthlyAppliancesProvider({ children }) {
           allMonthlyAppliances: allMonthlyAppliances,
           skippedAppliances: skippedAppliances,
         });
-        
       } catch (error) {
         console.log(error.message ?? error);
       }
@@ -59,10 +58,9 @@ export function MonthlyAppliancesProvider({ children }) {
     fetchMontlyAppliaces();
   }, [currentDate, skip, take]);
 
- 
   const onChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
+
     setCurrentDate(value);
   };
 

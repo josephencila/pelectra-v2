@@ -109,10 +109,11 @@ const readMonthlyAppliancesByYear = async (req, res) => {
 
             await prisma.$queryRaw(
                 Prisma.sql`
-                SELECT "month",sum("consumptionPerMonth") FROM
+                SELECT "month",sum("consumptionPerMonth") AS consumption FROM
                 ( SELECT DISTINCT(EXTRACT(MONTH FROM "selectedAt")) AS "month",
-                "consumptionPerMonth" FROM public."MonthlyAppliances"  WHERE "userId"=${userId} AND EXTRACT(YEAR FROM "selectedAt") = ${year} ORDER BY "month" ASC) 
-                 GROUP BY "month";`)
+                "consumptionPerMonth" FROM public."MonthlyAppliances"  
+                WHERE "userId"=${userId} AND EXTRACT(YEAR FROM "selectedAt") = ${year} ORDER BY "month" ASC) 
+                GROUP BY "month";`)
 
         return res.status(200).json({
             data: {

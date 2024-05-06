@@ -17,7 +17,7 @@ import { useEffect, useMemo, useState } from "react";
 import { newData } from "../../helpers/newData";
 
 import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
-import { removeDuplicateDate } from "../../helpers/helper";
+import { labels, removeDuplicateDate } from "../../helpers/helper";
 
 ChartJS.register(
   CategoryScale,
@@ -31,38 +31,9 @@ ChartJS.register(
 
 const VerticalBarChart = () => {
   const { currentDate, allData } = useMonthlyAppliances();
-  const [monthlyAppliancesByYear,setMonthlyAppliancesByYear] = useState([])
-  const labels = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const [monthlyAppliancesByYear, setMonthlyAppliancesByYear] = useState([]);
 
-  const val = 0;
-  const [defaults, setDefaults] = useState({
-    labels: labels,
-    datasets: [
-      {
-        label: "Estimated",
-        data: [],
-        backgroundColor: "#843BE0",
-      },
-      {
-        label: "Actual",
-        data: [],
-        backgroundColor: "#00BBE4",
-      },
-    ],
-  });
+  const [defaults, setDefaults] = useState({});
 
   const memoizeXRotation = useMemo(() => {
     return (ctx) => (ctx.dataset.data[ctx.dataIndex].x > 42 ? 90 : -70);
@@ -132,8 +103,7 @@ const VerticalBarChart = () => {
         }
 
         const { monthlyAppliancesByYear } = result.data;
-        setMonthlyAppliancesByYear(monthlyAppliancesByYear)
-        // console.log("WEEWOO", removeDuplicateDate(byYear(monthlyAppliancesByYear)).map(date => labels[date]));
+        setMonthlyAppliancesByYear(monthlyAppliancesByYear);
       } catch (error) {
         console.log(error.message ?? error);
       }
@@ -141,27 +111,43 @@ const VerticalBarChart = () => {
     fetchMonthlyAppliancesByYear();
   }, [currentDate]);
 
-  // console.log(newData[val].consumption.map((est) => est.month));
- 
-  
-  console.log(monthlyAppliancesByYear.map(all=> all.consumptionPerMonth))
   useMemo(() => {
+    const montlhyConsumptionComparison = () => {
+      const months = monthlyAppliancesByYear.map((m) => labels[m.month]);
+      const consumption = monthlyAppliancesByYear.map((m) => m.consumption);
+
+      let consumptions = [];
+
+      labels.map((item, index) => {
+        if (months.includes(item)) {
+          const pItems =
+            consumption[index] !== undefined
+              ? parseFloat(consumption[index])
+              : 0;
+          consumptions.push(pItems);
+        } else {
+          consumptions.push(0);
+        }
+      });
+
+      return consumptions;
+    };
     setDefaults({
-      labels: newData[val].consumption.map((est) => est.month) ,
+      labels: labels.map((label) => label),
       datasets: [
         {
           label: "Estimated",
-          data: 0,
+          data: montlhyConsumptionComparison(),
           backgroundColor: "#843BE0",
         },
         {
           label: "Actual",
-          data: newData[val].consumption.map((est) => est.actual),
+          data: 0,
           backgroundColor: "#00BBE4",
         },
       ],
     });
-  }, []);
+  }, [monthlyAppliancesByYear]);
 
   return (
     <div className="bg-slate-800  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs ">

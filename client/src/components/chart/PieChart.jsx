@@ -1,43 +1,44 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
+import { getRandomRgb, removeDuplicateDate, roundTo3Decimals } from "../../helpers/helper";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = () => {
-const {allData} = useMonthlyAppliances()
+  const { allData } = useMonthlyAppliances();
 
-  function getRandomRgb() {
-    var num = Math.floor(0xffffff * Math.random()).toFixed();
-    var r = num >> 16;
-    var g = (num >> 8) & 255;
-    var b = num & 255;
-    return `rgb(${r}, ${g}, ${b},.95)`;
-  }
+  const [pieData, setPieData] = useState();
 
 
 
-  const [pieData, setPieData] = useState({
-    labels: [
-      "Refrigerator",
-      "Electric Fan",
-      "Lights",
-      "Computer",
-      "Washing Machine",
-      "Rice Cooker",
-    ].map((data) => data),
+ 
 
-    datasets: [
-      {
-        label: "Consumption(kw)",
-        data: [12, 19, 3, 5, 2, 3].map((data) => data),
-        backgroundColor: [12, 19, 3, 5, 2, 3].map(() => getRandomRgb()),
-        borderColor: "black",
-        borderWidth: 0.5,
-      },
-    ],
-  });
+  useMemo(() => {
+    const appliancesNames = allData.allMonthlyAppliances.map(all=> all.appliancesName)
+    const noDuplicatesAppliancesNames = removeDuplicateDate(appliancesNames)
+    
+  
+    const perMonth = allData.allMonthlyAppliances.reduce((all, {appliancesName: a, consumptionPerMonth: c}) => {
+      all[a] = (all[a] || 0) + parseFloat(c);
+      return all;
+  }, {});
+
+
+    setPieData({
+      labels: noDuplicatesAppliancesNames.map((a) => a),
+      datasets: [
+        {
+          label: "Consumption(kw)",
+          data:Object.values(perMonth).map(a => roundTo3Decimals(a,3)),
+          backgroundColor: noDuplicatesAppliancesNames.map(() => getRandomRgb()),
+          borderColor: "black",
+          borderWidth: 0.5,
+        },
+      ],
+    });
+  }, [allData]);
 
   const options = {
     responsive: true,
@@ -49,13 +50,13 @@ const {allData} = useMonthlyAppliances()
       datalabels: {
         display: true,
         color: "black",
-        backgroundColor: 'white',
+        backgroundColor: "white",
         borderRadius: 50,
         labels: {
           title: {
             font: {
               weight: "bold",
-              size: 10
+              size: 10,
             },
           },
         },
@@ -64,17 +65,17 @@ const {allData} = useMonthlyAppliances()
       title: {
         display: true,
         text: "Monthly Appliances Consumption",
-        font:{
+        font: {
           size: 16,
-          weight: 'normal',
-          color: ChartJS.defaults.color = "white"
-        }
+          weight: "normal",
+          color: (ChartJS.defaults.color = "white"),
+        },
       },
     },
   };
   return (
     <div className=" bg-slate-800  rounded-md shadow-sm w-[99%] h-[99%]  min-h-xs pl-5 pb-5 pr-5">
-      <Pie data={pieData}  options={options}  className=" p-2.5"/>
+      <Pie data={pieData} options={options} className=" p-2.5" />
     </div>
   );
 };

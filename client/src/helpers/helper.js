@@ -14,14 +14,37 @@ export const sumAll = (object) => {
   const sum = object.reduce((s, k) => {
     return s + parseFloat(k.consumptionPerMonth);
   }, 0);
- 
-  return roundTo3Decimals(sum,3);
+
+  return roundTo3Decimals(sum, 3);
 };
 
 export const removeDuplicateDate = (object) => {
   const noDuplicate = object.reduce((s, k) => {
     return s.includes(k) ? s : [...s, k];
-  },[]);
- 
+  }, []);
+
   return noDuplicate;
 };
+
+export const labels = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const getRandomRgb =()=> {
+  var num = Math.floor(0xffffff * Math.random()).toFixed();
+  var r = num >> 16;
+  var g = (num >> 8) & 255;
+  var b = num & 255;
+  return `rgb(${r}, ${g}, ${b},.95)`;
+}

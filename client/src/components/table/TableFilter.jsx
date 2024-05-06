@@ -3,8 +3,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
 
 const TableFilter = () => {
-  const { allData, currentDate, onChange } = useMonthlyAppliances();
-  console.log(allData.totalConsumption)
+  const {  currentDate, onChange } = useMonthlyAppliances();
+ 
   return (
     <div className="w-full h-60px grid grid-cols-[repeat(2,1fr)]  max-md:grid-cols-[1fr] max-md:h-auto bg-slate-700 max-md:bg-slate-800 ">
       <div className="w-full h-60px flex items-center max-md:justify-center ">
