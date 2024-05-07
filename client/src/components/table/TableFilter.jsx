@@ -6,7 +6,7 @@ import CreateMonthlyAppliances from "../form/CreateMonthlyAppliances";
 
 const TableFilter = () => {
   const { currentDate, onChange } = useMonthlyAppliances();
-  const [toggleCreate, setToggleCreate] = useState(true);
+  const [toggleCreate, setToggleCreate] = useState(false);
   const [toggleAdd, setToggleAdd] = useState(false);
 
   const memoizedCreate = useMemo(() => {
@@ -17,9 +17,9 @@ const TableFilter = () => {
     );
   }, [toggleCreate]);
 
-  // const memoizedAdd = useMemo(() => {
-  //   return toggleAdd ? <AddMonthlyAppliances /> : <></>;
-  // }, [toggleAdd]);
+  const memoizedAdd = useMemo(() => {
+    return toggleAdd ? <AddMonthlyAppliances /> : <></>;
+  }, [toggleAdd]);
 
   return (
     <div className="w-full h-60px grid grid-cols-[repeat(2,1fr)]  max-md:grid-cols-[1fr] max-md:h-auto bg-slate-700 max-md:bg-slate-800 ">
@@ -52,7 +52,9 @@ const TableFilter = () => {
           <span className="text-purple-400">Create</span>
         </button>
       </div>
+      {memoizedAdd}
       {memoizedCreate}
+     
     </div>
   );
 };

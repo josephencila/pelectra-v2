@@ -81,7 +81,7 @@ const CreateMonthlyAppliances = ({ setToggleCreate }) => {
       setAllData((prevState) => ({
         ...prevState,
         [name]: val,
-        ["consumptionPerHr"]: toKwh(val),
+        ["consumptionPerHr"]: toKwh(val) || "",
       }));
     }
 
