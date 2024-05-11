@@ -48,3 +48,11 @@ export const getRandomRgb =()=> {
   var b = num & 255;
   return `rgb(${r}, ${g}, ${b},.95)`;
 }
+
+
+export const daysInMonth = (selectedDate) => {
+    const year = selectedDate.getFullYear()
+    const month = selectedDate.getMonth() + 1
+    const days = new Date(year, month, 0).getDate()
+    return days
+}

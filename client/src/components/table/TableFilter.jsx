@@ -3,11 +3,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import useMonthlyAppliances from "../../hooks/useMonthlyAppliances";
 import { useMemo, useState } from "react";
 import CreateMonthlyAppliances from "../form/CreateMonthlyAppliances";
+import AddMonthlyAppliances from "../form/AddMonthlyAppliances";
 
 const TableFilter = () => {
   const { currentDate, onChange } = useMonthlyAppliances();
   const [toggleCreate, setToggleCreate] = useState(false);
-  const [toggleAdd, setToggleAdd] = useState(false);
+  const [toggleAdd, setToggleAdd] = useState(true);
 
   const memoizedCreate = useMemo(() => {
     return toggleCreate ? (
@@ -18,7 +19,11 @@ const TableFilter = () => {
   }, [toggleCreate]);
 
   const memoizedAdd = useMemo(() => {
-    return toggleAdd ? <AddMonthlyAppliances /> : <></>;
+    return toggleAdd ? (
+      <AddMonthlyAppliances setToggleAdd={setToggleAdd} />
+    ) : (
+      <></>
+    );
   }, [toggleAdd]);
 
   return (
@@ -41,7 +46,9 @@ const TableFilter = () => {
           placeholderText="Select date"
         />
 
-        <button type="button" className="px-2">
+        <button
+            onClick={() => setToggleAdd(true)}
+        type="button" className="px-2">
           <span className="text-purple-400">Add</span>
         </button>
         <button
@@ -54,7 +61,6 @@ const TableFilter = () => {
       </div>
       {memoizedAdd}
       {memoizedCreate}
-     
     </div>
   );
 };
